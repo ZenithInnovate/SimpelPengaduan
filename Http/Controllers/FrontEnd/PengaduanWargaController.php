@@ -13,7 +13,6 @@
 
 namespace Modules\SimpelPengaduan\Http\Controllers\FrontEnd;
 
-use Illuminate\Http\JsonResponse;
 use Modules\SimpelPengaduan\Http\Requests\KirimPengaduanRequest;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
 use Modules\SimpelPengaduan\Models\Pengaduan;
@@ -43,7 +42,7 @@ class PengaduanWargaController extends Web_Controller
     /**
      * Simpan pengaduan baru dari warga
      */
-    public function store(KirimPengaduanRequest $request): JsonResponse
+    public function store(KirimPengaduanRequest $request): void
     {
         $pengaduan = $this->service->simpanPengaduan(
             $request->validated(),
@@ -51,7 +50,7 @@ class PengaduanWargaController extends Web_Controller
             request()->ip()
         );
 
-        return response()->json([
+        json([
             'success' => true,
             'nomor_tiket' => $pengaduan->nomor_tiket,
             'message' => 'Laporan pengaduan Anda berhasil dikirim dengan nomor tiket '.$pengaduan->nomor_tiket.'. Simpan nomor tiket ini untuk melacak perkembangan penanganan.',
@@ -61,24 +60,28 @@ class PengaduanWargaController extends Web_Controller
     /**
      * Lacak status tiket pengaduan
      */
-    public function lacak(): JsonResponse
+    public function lacak(): void
     {
         $kataKunci = trim((string) request('kata_kunci'));
 
         if (empty($kataKunci)) {
-            return response()->json([
+            json([
                 'success' => false,
                 'message' => 'Silakan masukkan nomor tiket, NIK, atau nomor WhatsApp.',
             ], 422);
+
+            return;
         }
 
         $pengaduan = $this->service->cariTiket($kataKunci);
 
         if (! $pengaduan) {
-            return response()->json([
+            json([
                 'success' => false,
                 'message' => 'Data pengaduan tidak ditemukan. Pastikan nomor tiket atau kontak sesuai.',
             ], 404);
+
+            return;
         }
 
         $balasan = $pengaduan->child->map(function ($item) {
@@ -90,7 +93,7 @@ class PengaduanWargaController extends Web_Controller
             ];
         });
 
-        return response()->json([
+        json([
             'success' => true,
             'data' => [
                 'id' => $pengaduan->id,
@@ -110,7 +113,7 @@ class PengaduanWargaController extends Web_Controller
     /**
      * Warga mengirim balasan lanjutan pada tiket pengaduan
      */
-    public function balas(int $id, TanggapiPengaduanRequest $request): JsonResponse
+    public function balas(int $id, TanggapiPengaduanRequest $request): void
     {
         $parent = Pengaduan::utama()->findOrFail($id);
 
@@ -121,7 +124,7 @@ class PengaduanWargaController extends Web_Controller
             false
         );
 
-        return response()->json([
+        json([
             'success' => true,
             'message' => 'Balasan berhasil dikirim.',
             'data' => [

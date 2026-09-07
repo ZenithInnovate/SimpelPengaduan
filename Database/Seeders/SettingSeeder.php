@@ -16,6 +16,7 @@ namespace Modules\SimpelPengaduan\Database\Seeders;
 use App\Models\SettingAplikasi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\SimpelCore\Enums\StatusBooleanEnum;
 use Modules\SimpelCore\Traits\MigratorTrait;
 
 class SettingSeeder extends Seeder
@@ -48,7 +49,8 @@ class SettingSeeder extends Seeder
                 'value' => '1',
                 'keterangan' => 'Kirim notifikasi WhatsApp ke warga saat pengaduan dibuat atau ditanggapi (1 = Ya, 0 = Tidak)',
                 'kategori' => 'Simpel Pengaduan',
-                'jenis' => 'select-boolean',
+                'jenis' => 'select-array',
+                'option' => json_encode(StatusBooleanEnum::all()),
                 'attribute' => json_encode([
                     'class' => 'required',
                 ]),

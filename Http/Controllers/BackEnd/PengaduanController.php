@@ -13,7 +13,6 @@
 
 namespace Modules\SimpelPengaduan\Http\Controllers\BackEnd;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewResponse;
@@ -134,7 +133,7 @@ class PengaduanController extends AdminModulController
     /**
      * Ubah status penanganan pengaduan secara cepat
      */
-    public function ubahStatus(int $id): JsonResponse|RedirectResponse
+    public function ubahStatus(int $id)
     {
         isCan('u');
 
@@ -144,10 +143,12 @@ class PengaduanController extends AdminModulController
         $this->service->ubahStatus($pengaduan, $status, true);
 
         if (request()->ajax()) {
-            return response()->json([
+            json([
                 'success' => true,
                 'message' => 'Status pengaduan berhasil diperbarui.',
             ]);
+
+            return;
         }
 
         return redirect(site_url('simpel/pengaduan/detail/'.$id))
@@ -157,7 +158,7 @@ class PengaduanController extends AdminModulController
     /**
      * Hapus pengaduan
      */
-    public function delete(): JsonResponse|RedirectResponse
+    public function delete()
     {
         isCan('d');
 
@@ -167,10 +168,12 @@ class PengaduanController extends AdminModulController
         $this->service->hapus($pengaduan);
 
         if (request()->ajax()) {
-            return response()->json([
+            json([
                 'success' => true,
                 'message' => 'Pengaduan berhasil dihapus.',
             ]);
+
+            return;
         }
 
         return redirect(site_url('simpel/pengaduan'))

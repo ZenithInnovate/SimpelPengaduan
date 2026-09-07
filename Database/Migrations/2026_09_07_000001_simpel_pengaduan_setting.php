@@ -12,13 +12,13 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
-use Modules\SimpelPengaduan\Database\Seeders\ModulSeeder;
+use Modules\SimpelPengaduan\Database\Seeders\SimpelPengaduanSeeder;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        (new ModulSeeder)->run();
+        (new SimpelPengaduanSeeder)->run();
     }
 
     public function down(): void {}

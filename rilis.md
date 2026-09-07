@@ -12,6 +12,9 @@
   - Formulir publik modern & portal pelacakan tiket pengaduan publik tanpa membebani server inti.
   - Data contoh (Demo Seeder) otomatis tersedia saat dipasang dengan mode demo (`config_item('demo_mode') === true`) mencakup skenario pengaduan selesai, diproses, dan menunggu beserta utas tanggapannya.
   - Standarisasi Komponen SimpelCore: Memperbarui halaman detail pengaduan (3 panel box) agar konsisten menggunakan komponen bersama `simpel-core::components.card.open/close` menggantikan markup `div.box` mentah.
+  - Penambahan entry point seeder modul `SimpelPengaduanSeeder` (memanggil `ModulSeeder`, `SettingSeeder`, dan `DemoPengaduanSeeder` per BLUEPRINT §1), penyesuaian migrasi setting, dan penambahan dokumen analisis teknis `Docs/ANALISIS.md`.
+  - Eliminasi hazard kompatibilitas CI3/I10: Mengganti pemanggilan `response()->json()` dengan helper global `json()` pada controller backend dan frontend.
+  - Kompatibilitas Form Pengaturan Aplikasi Lintas-Versi: Menyesuaikan tipe setting `select-boolean` menjadi `select-array` dengan opsi `StatusBooleanEnum::all()` pada `SettingSeeder` untuk menjamin kompatibilitas penuh dengan rilis OpenSID Premium v2609+.
   - Kompatibel penuh dengan target runtime I10 (PHP 8.1 / Illuminate 10) & L13 (PHP 8.4 / Laravel 13).
 
 ---
