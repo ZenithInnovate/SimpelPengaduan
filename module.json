@@ -1,0 +1,30 @@
+{
+    "name": "Simpel Pengaduan",
+    "slug": "simpel_pengaduan",
+    "namelower": "simpel-pengaduan",
+    "version": "1.0.0",
+    "description": "Modul Pengaduan Warga OpenSID terintegrasi tabel pengaduan inti, tracking tiket, respons percakapan berutas, dan notifikasi WhatsApp",
+    "author": "Akar Jaya Technology",
+    "author_url": "https://akar-dev.com",
+    "keywords": [
+        "opensid",
+        "modul",
+        "pengaduan",
+        "aspirasi",
+        "layanan-warga",
+        "whatsapp",
+        "simpel"
+    ],
+    "order": 26,
+    "providers": [
+        "Modules\\SimpelPengaduan\\Providers\\SimpelPengaduanServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "Helpers/simpel_pengaduan_helper.php"
+    ],
+    "requires": [],
+    "require": {
+        "simpel-core": ">=1.10.0"
+    }
+}

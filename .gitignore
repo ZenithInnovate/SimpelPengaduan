@@ -1,0 +1,12 @@
+# File
+.php-cs-fixer.cache
+composer.lock
+pint.json
+Obfuscator.php
+
+# Folder
+.cache-rector/
+.rector-cache/
+node_modules/
+vendor/
+*.zip
