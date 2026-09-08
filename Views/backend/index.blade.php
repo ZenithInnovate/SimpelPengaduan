@@ -68,9 +68,9 @@
                 <label class="control-label">Filter Status</label>
                 <select id="filter-status" class="form-control input-sm">
                     <option value="">— Semua Status —</option>
-                    <option value="1">Menunggu Diproses</option>
-                    <option value="2">Sedang Diproses</option>
-                    <option value="3">Selesai Diproses</option>
+                    @foreach (\Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::cases() as $st)
+                        <option value="{{ $st->value }}">{{ $st->label() }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

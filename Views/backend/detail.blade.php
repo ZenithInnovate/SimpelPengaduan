@@ -63,9 +63,9 @@
                             <label class="control-label">Perbarui Status Penanganan:</label>
                             <div class="input-group">
                                 <select name="status" class="form-control input-sm">
-                                    <option value="1" @selected($pengaduan->status == 1)>Menunggu Diproses</option>
-                                    <option value="2" @selected($pengaduan->status == 2)>Sedang Diproses</option>
-                                    <option value="3" @selected($pengaduan->status == 3)>Selesai Diproses</option>
+                                    @foreach (\Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::cases() as $st)
+                                        <option value="{{ $st->value }}" @selected($pengaduan->status == $st->value)>{{ $st->label() }}</option>
+                                    @endforeach
                                 </select>
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Ubah</button>
@@ -168,28 +168,39 @@
                 <form action="{{ site_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
                     @include('simpel-core::components.form.csrf')
                     <div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label">Isi Tanggapan / Tindak Lanjut <span class="text-danger">*</span></label>
-                            <textarea name="isi" rows="4" class="form-control" placeholder="Tuliskan keterangan tanggapan atau solusi penanganan..." required></textarea>
-                        </div>
+                        @include('simpel-core::components.form.field', [
+                            'type'        => 'textarea',
+                            'name'        => 'isi',
+                            'label'       => 'Isi Tanggapan / Tindak Lanjut',
+                            'required'    => true,
+                            'rows'        => 4,
+                            'placeholder' => 'Tuliskan keterangan tanggapan atau solusi penanganan...',
+                            'horizontal'  => false,
+                        ])
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Perbarui Status Sekaligus:</label>
-                                    <select name="status" class="form-control input-sm">
-                                        <option value="">— Biarkan Status Saat Ini ({{ $pengaduan->status_label }}) —</option>
-                                        <option value="2">Set ke: Sedang Diproses</option>
-                                        <option value="3">Set ke: Selesai Diproses</option>
-                                    </select>
-                                </div>
+                                @include('simpel-core::components.form.field', [
+                                    'type'        => 'select',
+                                    'name'        => 'status',
+                                    'label'       => 'Perbarui Status Sekaligus:',
+                                    'horizontal'  => false,
+                                    'emptyOption' => '— Biarkan Status Saat Ini (' . $pengaduan->status_label . ') —',
+                                    'options'     => [
+                                        \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::DIPROSES->value => 'Set ke: ' . \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::DIPROSES->label(),
+                                        \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::SELESAI->value => 'Set ke: ' . \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::SELESAI->label(),
+                                    ],
+                                ])
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Lampiran Foto Pendukung (Opsional):</label>
-                                    <input type="file" name="foto" class="form-control input-sm" accept="image/*">
-                                    <p class="help-block" style="font-size: 11px;">Maksimal 3 MB (JPG/PNG/WEBP).</p>
-                                </div>
+                                @include('simpel-core::components.form.field', [
+                                    'type'        => 'file',
+                                    'name'        => 'foto',
+                                    'label'       => 'Lampiran Foto Pendukung (Opsional):',
+                                    'horizontal'  => false,
+                                    'attr'        => 'accept="image/*"',
+                                    'hint'        => 'Maksimal 3 MB (JPG/PNG/WEBP).',
+                                ])
                             </div>
                         </div>
                     </div>

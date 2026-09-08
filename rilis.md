@@ -16,6 +16,7 @@
   - Eliminasi hazard kompatibilitas CI3/I10: Mengganti pemanggilan `response()->json()` dengan helper global `json()` pada controller backend dan frontend.
   - Kompatibilitas Form Pengaturan Aplikasi Lintas-Versi: Menyesuaikan tipe setting `select-boolean` menjadi `select-array` dengan opsi `StatusBooleanEnum::all()` pada `SettingSeeder` untuk menjamin kompatibilitas penuh dengan rilis OpenSID Premium v2609+.
   - Migrasi konfirmasi hapus modal klasik ke komponen bersama: Mengganti include modal klasik inti OpenSID (`konfirmasi_hapus`) pada view backend index dengan komponen bersama `simpel-core::components.js.konfirmasi` agar tombol aksi hapus (`buttons.actions.delete`) terhubung dengan dialog SweetAlert konfirmasi standar.
+  - Standarisasi Komponen Form: Mengadopsi simpel-core::components.form.field pada formulir tanggapan admin dan menyelaraskan pilihan status penanganan menggunakan StatusPengaduanEnum pada halaman detail dan filter index.
   - Kompatibel penuh dengan target runtime I10 (PHP 8.1 / Illuminate 10) & L13 (PHP 8.4 / Laravel 13).
 
 ---
