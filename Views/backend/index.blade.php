@@ -90,8 +90,6 @@
             ])
         </div>
     @include('simpel-core::components.card.close', ['row' => true])
-
-    @include('admin.layouts.components.konfirmasi_hapus')
 @endsection
 
 @push('scripts')
@@ -112,6 +110,11 @@
             ],
             'order' => [[6, 'desc']],
             'after' => '$("#filter-status").on("change", function () { TablePengaduan.draw(); });',
+        ])
+
+        @include('simpel-core::components.js.konfirmasi', [
+            'table' => 'TablePengaduan',
+            'massal' => false,
         ])
     });
 </script>

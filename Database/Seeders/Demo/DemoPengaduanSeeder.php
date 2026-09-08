@@ -17,6 +17,7 @@ use App\Models\SettingAplikasi;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 use Modules\SimpelPengaduan\Models\Pengaduan;
 
@@ -32,6 +33,10 @@ class DemoPengaduanSeeder extends Seeder
     public function run(): void
     {
         if (! config_item('demo_mode')) {
+            return;
+        }
+
+        if (! Schema::hasTable('simpel_pengaduan')) {
             return;
         }
 
@@ -135,15 +140,17 @@ class DemoPengaduanSeeder extends Seeder
             'updated_at' => $now->copy()->subHours(4),
         ]);
 
-        // Tandai bahwa data demo telah berhasil di-seed
-        SettingAplikasi::updateOrCreate(
-            ['key' => self::PENANDA, 'config_id' => $configId],
-            [
-                'value' => '1',
-                'keterangan' => 'Penanda data demo modul Simpel Pengaduan telah di-seed',
-                'kategori' => 'Simpel Pengaduan',
-            ]
-        );
+        // Tandai bahwa data demo telah berhasil di-seed (withoutEvents agar aman di instalasi tanpa tabel log_activity)
+        SettingAplikasi::withoutEvents(static function () use ($configId): void {
+            SettingAplikasi::updateOrCreate(
+                ['key' => self::PENANDA, 'config_id' => $configId],
+                [
+                    'value' => '1',
+                    'keterangan' => 'Penanda data demo modul Simpel Pengaduan telah di-seed',
+                    'kategori' => 'Simpel Pengaduan',
+                ]
+            );
+        });
 
         cache()->flush();
     }

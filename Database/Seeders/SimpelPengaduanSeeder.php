@@ -15,7 +15,6 @@ namespace Modules\SimpelPengaduan\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Modules\SimpelPengaduan\Database\Seeders\Demo\DemoPengaduanSeeder;
 
 /**
  * Entry point seeder modul (dipanggil migrasi akses_modul / setting).
@@ -30,6 +29,5 @@ class SimpelPengaduanSeeder extends Seeder
 
         $this->call(ModulSeeder::class);
         $this->call(SettingSeeder::class);
-        $this->call(DemoPengaduanSeeder::class);
     }
 }

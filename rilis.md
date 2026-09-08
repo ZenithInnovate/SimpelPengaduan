@@ -15,6 +15,7 @@
   - Penambahan entry point seeder modul `SimpelPengaduanSeeder` (memanggil `ModulSeeder`, `SettingSeeder`, dan `DemoPengaduanSeeder` per BLUEPRINT §1), penyesuaian migrasi setting, dan penambahan dokumen analisis teknis `Docs/ANALISIS.md`.
   - Eliminasi hazard kompatibilitas CI3/I10: Mengganti pemanggilan `response()->json()` dengan helper global `json()` pada controller backend dan frontend.
   - Kompatibilitas Form Pengaturan Aplikasi Lintas-Versi: Menyesuaikan tipe setting `select-boolean` menjadi `select-array` dengan opsi `StatusBooleanEnum::all()` pada `SettingSeeder` untuk menjamin kompatibilitas penuh dengan rilis OpenSID Premium v2609+.
+  - Migrasi konfirmasi hapus modal klasik ke komponen bersama: Mengganti include modal klasik inti OpenSID (`konfirmasi_hapus`) pada view backend index dengan komponen bersama `simpel-core::components.js.konfirmasi` agar tombol aksi hapus (`buttons.actions.delete`) terhubung dengan dialog SweetAlert konfirmasi standar.
   - Kompatibel penuh dengan target runtime I10 (PHP 8.1 / Illuminate 10) & L13 (PHP 8.4 / Laravel 13).
 
 ---

@@ -33,8 +33,5 @@ class ModulSeeder extends Seeder
             'level' => 2,
             'parent' => 0,
         ]);
-
-        $this->call(SettingSeeder::class);
-        $this->call(\Modules\SimpelPengaduan\Database\Seeders\Demo\DemoPengaduanSeeder::class);
     }
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\File;
 use Modules\SimpelCore\Models\ModulModel;
 use Modules\SimpelCore\Services\ModulService;
 use Modules\SimpelCore\Traits\MigratorTrait;
+use Modules\SimpelPengaduan\Database\Seeders\Demo\DemoPengaduanSeeder;
 use Modules\SimpelPengaduan\Services\BuildService;
 
 return new class extends Migration
@@ -34,6 +35,9 @@ return new class extends Migration
         Model::unguarded(static function () use ($path): void {
             ModulService::handle($path);
         });
+
+        // Isi data demo \u2014 hanya jika demo_mode aktif, idempoten (ada penanda)
+        (new DemoPengaduanSeeder)->run();
     }
 
     public function down(): void
