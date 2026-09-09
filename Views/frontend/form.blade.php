@@ -209,7 +209,18 @@
             var formData = new FormData(this);
             var $btn = $('#btn-submit-lapor');
 
-            $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Mengirim Laporan...');
+            $btn.prop('disabled', true); // disable tombol, tanpa spinner
+
+            // Debounced loading: alert menunggu hanya tampil bila proses >= 1 detik
+            var loadingTimer = setTimeout(function () {
+                Swal.fire({
+                    title: 'Mengirim Laporan',
+                    text: 'Mohon tunggu, laporan Anda sedang diproses...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: function () { Swal.showLoading(); }
+                });
+            }, 1000);
 
             $.ajax({
                 url: '{{ site_url("layanan-pengaduan/kirim") }}',
@@ -219,6 +230,7 @@
                 contentType: false,
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 success: function (res) {
+                    clearTimeout(loadingTimer);
                     Swal.fire({
                         icon: 'success',
                         title: 'Laporan Berhasil Terkirim!',
@@ -236,6 +248,7 @@
                     });
                 },
                 error: function (xhr) {
+                    clearTimeout(loadingTimer);
                     var pesan = 'Terjadi kesalahan saat mengirim pengaduan.';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         pesan = xhr.responseJSON.message;
@@ -243,7 +256,7 @@
                     Swal.fire('Gagal', pesan, 'error');
                 },
                 complete: function () {
-                    $btn.prop('disabled', false).html('<i class="fa fa-paper-plane"></i> Kirim Laporan Sekarang');
+                    $btn.prop('disabled', false);
                 }
             });
         });
@@ -255,13 +268,25 @@
             if (!kataKunci) return;
 
             var $btn = $('#btn-submit-lacak');
-            $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
+            $btn.prop('disabled', true); // disable tombol, tanpa spinner
+
+            var loadingTimer = setTimeout(function () {
+                Swal.fire({
+                    title: 'Mencari Tiket',
+                    text: 'Mohon tunggu, data pengaduan sedang dicari...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: function () { Swal.showLoading(); }
+                });
+            }, 1000);
 
             $.ajax({
                 url: '{{ site_url("layanan-pengaduan/lacak") }}',
                 type: 'GET',
                 data: { kata_kunci: kataKunci },
                 success: function (res) {
+                    clearTimeout(loadingTimer);
+                    if (Swal.isVisible() && Swal.isLoading()) { Swal.close(); }
                     if (res.success && res.data) {
                         var d = res.data;
                         $('#balas-pengaduan-id').val(d.id);
@@ -289,6 +314,7 @@
                     }
                 },
                 error: function (xhr) {
+                    clearTimeout(loadingTimer);
                     var pesan = 'Data pengaduan tidak ditemukan.';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         pesan = xhr.responseJSON.message;
@@ -297,7 +323,7 @@
                     $('#wadah-hasil-lacak').addClass('hidden');
                 },
                 complete: function () {
-                    $btn.prop('disabled', false).html('<i class="fa fa-search"></i> Lacak Tiket');
+                    $btn.prop('disabled', false);
                 }
             });
         });
@@ -329,7 +355,17 @@
             if (!id || !isi) return;
 
             var $btn = $('#btn-submit-balas');
-            $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Mengirim...');
+            $btn.prop('disabled', true); // disable tombol, tanpa spinner
+
+            var loadingTimer = setTimeout(function () {
+                Swal.fire({
+                    title: 'Mengirim Balasan',
+                    text: 'Mohon tunggu...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: function () { Swal.showLoading(); }
+                });
+            }, 1000);
 
             $.ajax({
                 url: '{{ site_url("layanan-pengaduan/tanggapi") }}/' + id,
@@ -337,6 +373,7 @@
                 data: { isi: isi },
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 success: function (res) {
+                    clearTimeout(loadingTimer);
                     $('#balas-isi').val('');
                     if (res.data) {
                         var html = '<div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1.5">' +
@@ -351,10 +388,11 @@
                     Swal.fire('Terkirim', 'Balasan Anda berhasil dikirim ke petugas desa.', 'success');
                 },
                 error: function () {
+                    clearTimeout(loadingTimer);
                     Swal.fire('Gagal', 'Gagal mengirim balasan.', 'error');
                 },
                 complete: function () {
-                    $btn.prop('disabled', false).html('<i class="fa fa-reply"></i> Kirim Balasan');
+                    $btn.prop('disabled', false);
                 }
             });
         });

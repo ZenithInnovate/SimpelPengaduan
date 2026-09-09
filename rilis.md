@@ -19,6 +19,7 @@
   - Standarisasi Komponen Form: Mengadopsi simpel-core::components.form.field pada formulir tanggapan admin dan menyelaraskan pilihan status penanganan menggunakan StatusPengaduanEnum pada halaman detail dan filter index.
   - Standarisasi AJAX Delete & Ubah Status: Mengubah method `delete()` dan `ubahStatus()` pada `PengaduanController` agar mengembalikan respon JSON terstandarisasi `{ status: 'success'|'error', message: '...' }` dengan otorisasi `isCanJson('h')` / `isCanJson('u')` untuk mendukung anti-reload DataTables via `js.konfirmasi`.
   - Standarisasi BaseModel SimpelBuilder: Mengalihkan inheritance model `Pengaduan` ke `Modules\SimpelCore\Models\BaseModel` guna mendukung query chaining Laravel standar (`findOrFail()`, `firstOrFail()`) di runtime I10 dan L13 melalui `SimpelBuilder`.
+  - Standarisasi Debounced Loading & Peniadaan Spinner Tombol (2026-09-09): Menghapus spinner `fa-spinner` pada 3 tombol submit form publik (`Views/frontend/form.blade.php`: lapor, lacak, balas) — kini hanya di-disable tanpa perubahan teks/ikon — dan menerapkan debounced loading alert 1 detik sehingga `Swal.showLoading()` hanya muncul bila proses berlangsung >= 1000ms, sesuai `CODING-STANDARDS.md` aturan Debounced Loading.
   - Kompatibel penuh dengan target runtime I10 (PHP 8.1 / Illuminate 10) & L13 (PHP 8.4 / Laravel 13).
 
 ---
