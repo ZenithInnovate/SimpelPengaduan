@@ -18,6 +18,7 @@
   - Migrasi konfirmasi hapus modal klasik ke komponen bersama: Mengganti include modal klasik inti OpenSID (`konfirmasi_hapus`) pada view backend index dengan komponen bersama `simpel-core::components.js.konfirmasi` agar tombol aksi hapus (`buttons.actions.delete`) terhubung dengan dialog SweetAlert konfirmasi standar.
   - Standarisasi Komponen Form: Mengadopsi simpel-core::components.form.field pada formulir tanggapan admin dan menyelaraskan pilihan status penanganan menggunakan StatusPengaduanEnum pada halaman detail dan filter index.
   - Standarisasi AJAX Delete & Ubah Status: Mengubah method `delete()` dan `ubahStatus()` pada `PengaduanController` agar mengembalikan respon JSON terstandarisasi `{ status: 'success'|'error', message: '...' }` dengan otorisasi `isCanJson('h')` / `isCanJson('u')` untuk mendukung anti-reload DataTables via `js.konfirmasi`.
+  - Standarisasi BaseModel SimpelBuilder: Mengalihkan inheritance model `Pengaduan` ke `Modules\SimpelCore\Models\BaseModel` guna mendukung query chaining Laravel standar (`findOrFail()`, `firstOrFail()`) di runtime I10 dan L13 melalui `SimpelBuilder`.
   - Kompatibel penuh dengan target runtime I10 (PHP 8.1 / Illuminate 10) & L13 (PHP 8.4 / Laravel 13).
 
 ---

@@ -13,11 +13,11 @@
 
 namespace Modules\SimpelPengaduan\Models;
 
-use App\Models\BaseModel;
 use App\Models\Penduduk;
 use App\Traits\ConfigId;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\SimpelCore\Models\BaseModel;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 
 class Pengaduan extends BaseModel
