@@ -135,7 +135,11 @@ class PengaduanController extends AdminModulController
      */
     public function ubahStatus(int $id)
     {
-        isCan('u');
+        if (request()->ajax()) {
+            isCanJson('u');
+        } else {
+            isCan('u');
+        }
 
         $status = (int) request('status');
         $pengaduan = Pengaduan::utama()->findOrFail($id);
@@ -143,12 +147,10 @@ class PengaduanController extends AdminModulController
         $this->service->ubahStatus($pengaduan, $status, true);
 
         if (request()->ajax()) {
-            json([
-                'success' => true,
+            return json([
+                'status' => 'success',
                 'message' => 'Status pengaduan berhasil diperbarui.',
             ]);
-
-            return;
         }
 
         return redirect(site_url('simpel/pengaduan/detail/'.$id))
@@ -160,20 +162,19 @@ class PengaduanController extends AdminModulController
      */
     public function delete()
     {
-        isCan('d');
+        isCanJson('h');
 
-        $id = (int) request('id');
+        $ids = (array) (request('ids') ?: request('id'));
+        $id = (int) ($ids[0] ?? 0);
         $pengaduan = Pengaduan::utama()->findOrFail($id);
 
         $this->service->hapus($pengaduan);
 
         if (request()->ajax()) {
-            json([
-                'success' => true,
+            return json([
+                'status' => 'success',
                 'message' => 'Pengaduan berhasil dihapus.',
             ]);
-
-            return;
         }
 
         return redirect(site_url('simpel/pengaduan'))
