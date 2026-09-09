@@ -26,7 +26,7 @@ return new class extends Migration
 
     public function up(): void
     {
-        $path = base_path('Modules/SimpelPengaduan');
+        $path = app()->basePath('Modules/SimpelPengaduan');
 
         if (! File::isDirectory($path)) {
             return;

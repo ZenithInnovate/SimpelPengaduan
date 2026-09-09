@@ -2,6 +2,8 @@
     "name": "Simpel Pengaduan",
     "slug": "simpel_pengaduan",
     "namelower": "simpel-pengaduan",
+    "namespace": "SimpelPengaduan",
+    "type": "module",
     "version": "1.0.0",
     "description": "Modul Pengaduan Warga OpenSID terintegrasi tabel pengaduan inti, tracking tiket, respons percakapan berutas, dan notifikasi WhatsApp",
     "author": "Akar Jaya Technology",

@@ -28,3 +28,7 @@
 - Threaded conversation (percakapan bersarang antara pelapor dan pemerintah desa).
 - Notifikasi WhatsApp otomatis ke pelapor saat ada tanggapan atau pembaruan status.
 - Dashboard metrik pengaduan masuk, diproses, dan selesai.
+
+
+### Perubahan Terbaru
+- Perbaiki 1 potensi masalah kompatibilitas I10 (Umum v2507+) pada SimpelPengaduan
