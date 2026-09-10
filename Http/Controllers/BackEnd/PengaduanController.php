@@ -13,7 +13,6 @@
 
 namespace Modules\SimpelPengaduan\Http\Controllers\BackEnd;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewResponse;
 use Modules\SimpelCore\Http\Controllers\AdminModulController;
@@ -119,12 +118,20 @@ class PengaduanController extends AdminModulController
     /**
      * Proses kirim balasan dari admin desa
      */
-    public function tanggapi(int $id, TanggapiPengaduanRequest $request): RedirectResponse
+    public function tanggapi(int $id, TanggapiPengaduanRequest $request)
     {
-        isCan('u');
+        isCanJson('u');
 
         $parent = Pengaduan::utama()->findOrFail($id);
         $this->service->tanggapi($parent, $request->validated(), $request->file('foto'), true);
+
+        if (request()->ajax() || request()->expectsJson()) {
+            return json([
+                'status' => 'success',
+                'message' => 'Tanggapan berhasil dikirim ke pelapor.',
+                'redirect_url' => site_url('simpel/pengaduan/detail/'.$id),
+            ]);
+        }
 
         return redirect(site_url('simpel/pengaduan/detail/'.$id))
             ->with('success', 'Tanggapan berhasil dikirim ke pelapor.');

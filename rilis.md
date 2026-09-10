@@ -2,6 +2,7 @@
 
 ## v1.0.0 (2026-09-07)
 
+- **Standarisasi AJAX Tanggapi Pengaduan & Debounced Loading Status (2026-09-10)**: Menyelaraskan method `tanggapi()` pada `PengaduanController` ke respon JSON dual dengan otorisasi `isCanJson('u')`, memigrasikan formulir tanggapan admin di `Views/backend/detail.blade.php` ke komponen bersama `simpel-core::components.assets.form_request` (`#form_validasi`), serta menerapkan handler AJAX debounced loading alert (ambang batas 1 detik) tanpa spinner tombol pada pembaruan status pengaduan per CODING-STANDARDS §12.
 - **Inisialisasi Modul Simpel Pengaduan**:
   - Menggunakan langsung tabel inti `pengaduan` OpenSID (Umum & Premium) tanpa menduplikasi data atau merusak riwayat yang sudah ada.
   - Penomoran tiket otomatis virtual berformat `LPR-YYYYMM-XXXX` memudahkan warga melacak progres laporan.

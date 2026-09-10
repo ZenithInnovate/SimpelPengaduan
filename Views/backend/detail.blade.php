@@ -1,5 +1,6 @@
 @extends('admin.layouts.index')
 @include('simpel-core::components.assets.style')
+@include('simpel-core::components.assets.form_request')
 @include('simpel-core::components.page.header', [
     'title' => 'Detail & Utas Pengaduan',
     'sub' => 'Simpel Pengaduan',
@@ -57,7 +58,7 @@
                     </ul>
 
                     {{-- Form Cepat Perbarui Status --}}
-                    <form action="{{ site_url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
+                    <form id="form_status" action="{{ site_url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
                         @include('simpel-core::components.form.csrf')
                         <div class="form-group" style="margin-top: 15px;">
                             <label class="control-label">Perbarui Status Penanganan:</label>
@@ -165,7 +166,7 @@
                 'icon' => 'fa-reply',
                 'noBody' => true,
             ])
-                <form action="{{ site_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
+                <form id="form_validasi" action="{{ site_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
                     @include('simpel-core::components.form.csrf')
                     <div class="box-body">
                         @include('simpel-core::components.form.field', [
@@ -216,3 +217,60 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#form_status').on('submit', function(e) {
+                e.preventDefault();
+                var form = $(this);
+                var btn = form.find('button[type="submit"]');
+                btn.prop('disabled', true);
+
+                // Debounced loading alert (ambang batas 1000ms, CODING-STANDARDS §12)
+                var timerLoading = setTimeout(function() {
+                    Swal.fire({
+                        title: 'Memproses...',
+                        text: 'Mohon menunggu beberapa saat',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        didOpen: function() {
+                            Swal.showLoading();
+                        }
+                    });
+                }, 1000);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json'
+                }).done(function(res) {
+                    clearTimeout(timerLoading);
+                    if (Swal.isVisible()) {
+                        Swal.close();
+                    }
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: res.message || 'Status pengaduan berhasil diperbarui.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        window.location.reload(); // // halaman berubah total (perubahan status penanganan pengaduan)
+                    }, 1200);
+                }).fail(function(xhr) {
+                    clearTimeout(timerLoading);
+                    if (Swal.isVisible()) {
+                        Swal.close();
+                    }
+                    btn.prop('disabled', false);
+                    var msg = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Gagal memperbarui status.';
+                    Swal.fire('Gagal!', msg, 'error');
+                });
+            });
+        });
+    </script>
+@endpush
