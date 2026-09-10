@@ -41,7 +41,7 @@ class SettingSeeder extends Seeder
                     'class' => 'required',
                     'disabled' => 'disabled',
                 ]),
-                'urut' => 999,
+                'urut' => 999999,
             ],
             [
                 'judul' => 'Notifikasi WhatsApp Pengaduan',
@@ -70,7 +70,7 @@ class SettingSeeder extends Seeder
             ],
         ]);
 
-        SettingAplikasi::where('key', 'sp_version')->update(['value' => $version]);
+        SettingAplikasi::where('key', 'sp_version')->update(['value' => $version, 'urut' => 999999]);
 
         cache()->flush();
     }

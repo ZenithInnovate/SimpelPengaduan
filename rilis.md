@@ -1,7 +1,6 @@
-# 📦 CATATAN RILIS
-
-## v1.0.0 (2026-09-07)
-
+##### 🔧 **CATATAN RILIS v1.0.0**
+- **Urutan Pengaturan Versi**: Menyetel nomor urut pengaturan `sp_version` ke `999999` di `SettingSeeder` agar konsisten berada di posisi paling akhir daftar pengaturan aplikasi (2026-09-11).
+- Perbaiki 1 potensi masalah kompatibilitas I10 (Umum v2507+) pada SimpelPengaduan
 - **Standarisasi Respon JSON Murni & Eliminasi Fallback Redirect (2026-09-10)**: Menyelaraskan method `tanggapi()`, `ubahStatus()`, dan `delete()` pada `PengaduanController` ke respon JSON murni dengan otorisasi `isCanJson('u'/'h')`, menghapus percabangan dual redirect dan `redirect()->with()` yang tidak kompatibel di runtime hybrid CI3 + Illuminate 10, memigrasikan formulir tanggapan admin di `Views/backend/detail.blade.php` ke komponen bersama `simpel-core::components.assets.form_request` (`#form_validasi`), serta menerapkan handler AJAX debounced loading alert (ambang batas 1 detik) tanpa spinner tombol pada pembaruan status pengaduan per CODING-STANDARDS §12.
 - **Inisialisasi Modul Simpel Pengaduan**:
   - Menggunakan langsung tabel inti `pengaduan` OpenSID (Umum & Premium) tanpa menduplikasi data atau merusak riwayat yang sudah ada.
@@ -25,7 +24,7 @@
 
 ---
 
-## 🚀 FITUR STANDAR
+##### 🚀 **FITUR STANDAR**
 
 - Integrasi penuh dengan tabel `pengaduan` bawaan OpenSID.
 - Dukungan pelacakan pengaduan berbasis nomor tiket dan NIK/No. Telepon.
@@ -33,6 +32,3 @@
 - Notifikasi WhatsApp otomatis ke pelapor saat ada tanggapan atau pembaruan status.
 - Dashboard metrik pengaduan masuk, diproses, dan selesai.
 
-
-### Perubahan Terbaru
-- Perbaiki 1 potensi masalah kompatibilitas I10 (Umum v2507+) pada SimpelPengaduan
