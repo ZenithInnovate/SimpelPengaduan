@@ -125,16 +125,11 @@ class PengaduanController extends AdminModulController
         $parent = Pengaduan::utama()->findOrFail($id);
         $this->service->tanggapi($parent, $request->validated(), $request->file('foto'), true);
 
-        if (request()->ajax() || request()->expectsJson()) {
-            return json([
-                'status' => 'success',
-                'message' => 'Tanggapan berhasil dikirim ke pelapor.',
-                'redirect_url' => site_url('simpel/pengaduan/detail/'.$id),
-            ]);
-        }
-
-        return redirect(site_url('simpel/pengaduan/detail/'.$id))
-            ->with('success', 'Tanggapan berhasil dikirim ke pelapor.');
+        return json([
+            'status' => 'success',
+            'message' => 'Tanggapan berhasil dikirim ke pelapor.',
+            'redirect_url' => site_url('simpel/pengaduan/detail/'.$id),
+        ]);
     }
 
     /**
@@ -142,26 +137,17 @@ class PengaduanController extends AdminModulController
      */
     public function ubahStatus(int $id)
     {
-        if (request()->ajax()) {
-            isCanJson('u');
-        } else {
-            isCan('u');
-        }
+        isCanJson('u');
 
         $status = (int) request('status');
         $pengaduan = Pengaduan::utama()->findOrFail($id);
 
         $this->service->ubahStatus($pengaduan, $status, true);
 
-        if (request()->ajax()) {
-            return json([
-                'status' => 'success',
-                'message' => 'Status pengaduan berhasil diperbarui.',
-            ]);
-        }
-
-        return redirect(site_url('simpel/pengaduan/detail/'.$id))
-            ->with('success', 'Status pengaduan berhasil diperbarui.');
+        return json([
+            'status' => 'success',
+            'message' => 'Status pengaduan berhasil diperbarui.',
+        ]);
     }
 
     /**
@@ -177,14 +163,9 @@ class PengaduanController extends AdminModulController
 
         $this->service->hapus($pengaduan);
 
-        if (request()->ajax()) {
-            return json([
-                'status' => 'success',
-                'message' => 'Pengaduan berhasil dihapus.',
-            ]);
-        }
-
-        return redirect(site_url('simpel/pengaduan'))
-            ->with('success', 'Pengaduan berhasil dihapus.');
+        return json([
+            'status' => 'success',
+            'message' => 'Pengaduan berhasil dihapus.',
+        ]);
     }
 }
