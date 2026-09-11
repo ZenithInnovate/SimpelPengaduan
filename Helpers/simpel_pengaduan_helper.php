@@ -11,8 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
-
 if (! function_exists('simpel_pengaduan_nomor_tiket')) {
     /**
      * Format virtual nomor tiket pengaduan
@@ -43,18 +41,6 @@ if (! function_exists('simpel_pengaduan_id_from_tiket')) {
         }
 
         return null;
-    }
-}
-
-if (! function_exists('simpel_pengaduan_status_label')) {
-    /**
-     * Dapatkan label status
-     */
-    function simpel_pengaduan_status_label(int|string|null $status): string
-    {
-        $enum = StatusPengaduanEnum::fromValue($status);
-
-        return $enum ? $enum->label() : 'Tidak Diketahui';
     }
 }
 
