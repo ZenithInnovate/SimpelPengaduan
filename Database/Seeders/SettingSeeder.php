@@ -13,7 +13,6 @@
 
 namespace Modules\SimpelPengaduan\Database\Seeders;
 
-use App\Models\SettingAplikasi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\SimpelCore\Enums\StatusBooleanEnum;

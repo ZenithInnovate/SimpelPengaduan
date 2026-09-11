@@ -18,7 +18,7 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
-use Modules\SimpelPengaduan\Models\Pengaduan;
+use Modules\SimpelPengaduan\Models\PengaduanModel;
 
 class PengaduanService
 {
@@ -28,10 +28,10 @@ class PengaduanService
     public function getMetrics(): array
     {
         return [
-            'total' => Pengaduan::utama()->count(),
-            'menunggu' => Pengaduan::utama()->where('status', StatusPengaduanEnum::MENUNGGU->value)->count(),
-            'diproses' => Pengaduan::utama()->where('status', StatusPengaduanEnum::DIPROSES->value)->count(),
-            'selesai' => Pengaduan::utama()->where('status', StatusPengaduanEnum::SELESAI->value)->count(),
+            'total' => PengaduanModel::utama()->count(),
+            'menunggu' => PengaduanModel::utama()->where('status', StatusPengaduanEnum::MENUNGGU->value)->count(),
+            'diproses' => PengaduanModel::utama()->where('status', StatusPengaduanEnum::DIPROSES->value)->count(),
+            'selesai' => PengaduanModel::utama()->where('status', StatusPengaduanEnum::SELESAI->value)->count(),
         ];
     }
 
@@ -40,7 +40,7 @@ class PengaduanService
      */
     public function queryPengaduan(?int $status = null, ?string $search = null)
     {
-        return Pengaduan::utama()
+        return PengaduanModel::utama()
             ->with(['child'])
             ->filterStatus($status)
             ->cari($search)
@@ -50,14 +50,14 @@ class PengaduanService
     /**
      * Simpan pengaduan baru dari warga
      */
-    public function simpanPengaduan(array $data, $fileFoto = null, ?string $ipAddress = null): Pengaduan
+    public function simpanPengaduan(array $data, $fileFoto = null, ?string $ipAddress = null): PengaduanModel
     {
         $namaFoto = null;
         if ($fileFoto && $fileFoto->isValid()) {
             $namaFoto = $this->uploadFoto($fileFoto);
         }
 
-        $pengaduan = Pengaduan::create([
+        $pengaduan = PengaduanModel::create([
             'id_pengaduan' => null,
             'nama' => trim($data['nama']),
             'nik' => ! empty($data['nik']) ? trim($data['nik']) : null,
@@ -78,7 +78,7 @@ class PengaduanService
     /**
      * Berikan tanggapan / balasan pada tiket pengaduan
      */
-    public function tanggapi(Pengaduan $parent, array $data, $fileFoto = null, bool $isAdmin = true): Pengaduan
+    public function tanggapi(PengaduanModel $parent, array $data, $fileFoto = null, bool $isAdmin = true): PengaduanModel
     {
         $namaFoto = null;
         if ($fileFoto && $fileFoto->isValid()) {
@@ -87,7 +87,7 @@ class PengaduanService
 
         $namaPengirim = $isAdmin ? (auth()->user()->nama ?? 'Pemerintah Desa') : $parent->nama;
 
-        $balasan = Pengaduan::create([
+        $balasan = PengaduanModel::create([
             'id_pengaduan' => $parent->id,
             'nama' => $namaPengirim,
             'nik' => $isAdmin ? null : $parent->nik,
@@ -113,7 +113,7 @@ class PengaduanService
     /**
      * Perbarui status tiket pengaduan
      */
-    public function ubahStatus(Pengaduan $pengaduan, int $status, bool $kirimNotif = true): bool
+    public function ubahStatus(PengaduanModel $pengaduan, int $status, bool $kirimNotif = true): bool
     {
         $updated = $pengaduan->update(['status' => $status]);
 
@@ -130,7 +130,7 @@ class PengaduanService
     /**
      * Hapus pengaduan beserta seluruh utas tanggapannya
      */
-    public function hapus(Pengaduan $pengaduan): bool
+    public function hapus(PengaduanModel $pengaduan): bool
     {
         // Hapus balasan anak terlebih dahulu
         $pengaduan->child()->each(function ($anak) {
@@ -143,18 +143,18 @@ class PengaduanService
     /**
      * Cari pengaduan berdasarkan nomor tiket atau kata kunci
      */
-    public function cariTiket(string $kataKunci): ?Pengaduan
+    public function cariTiket(string $kataKunci): ?PengaduanModel
     {
         $id = simpel_pengaduan_id_from_tiket($kataKunci);
 
         if ($id) {
-            $item = Pengaduan::utama()->find($id);
+            $item = PengaduanModel::utama()->find($id);
             if ($item) {
                 return $item;
             }
         }
 
-        return Pengaduan::utama()
+        return PengaduanModel::utama()
             ->where(function ($q) use ($kataKunci) {
                 $q->where('telepon', $kataKunci)
                     ->orWhere('nik', $kataKunci);
@@ -185,7 +185,7 @@ class PengaduanService
     /**
      * Notifikasi laporan pengaduan baru
      */
-    private function notifikasiPengaduanBaru(Pengaduan $pengaduan): void
+    private function notifikasiPengaduanBaru(PengaduanModel $pengaduan): void
     {
         // Notifikasi ke warga
         $pesanWarga = "Halo {$pengaduan->nama},\n\nTerima kasih telah menyampaikan laporan/pengaduan ke Pemerintah Desa.\n\n"
@@ -210,7 +210,7 @@ class PengaduanService
     /**
      * Notifikasi saat ada tanggapan baru
      */
-    private function notifikasiTanggapan(Pengaduan $parent, Pengaduan $balasan, bool $isAdmin): void
+    private function notifikasiTanggapan(PengaduanModel $parent, PengaduanModel $balasan, bool $isAdmin): void
     {
         if ($isAdmin) {
             $pesan = "Halo {$parent->nama},\n\nPengaduan Anda (*{$parent->nomor_tiket}*) mendapat tanggapan dari Pemerintah Desa:\n\n"

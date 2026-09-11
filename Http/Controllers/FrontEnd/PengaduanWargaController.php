@@ -15,7 +15,7 @@ namespace Modules\SimpelPengaduan\Http\Controllers\FrontEnd;
 
 use Modules\SimpelPengaduan\Http\Requests\KirimPengaduanRequest;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
-use Modules\SimpelPengaduan\Models\Pengaduan;
+use Modules\SimpelPengaduan\Models\PengaduanModel;
 use Modules\SimpelPengaduan\Services\PengaduanService;
 use Web_Controller;
 
@@ -115,7 +115,7 @@ class PengaduanWargaController extends Web_Controller
      */
     public function balas(int $id, TanggapiPengaduanRequest $request): void
     {
-        $parent = Pengaduan::utama()->findOrFail($id);
+        $parent = PengaduanModel::utama()->findOrFail($id);
 
         $balasan = $this->service->tanggapi(
             $parent,

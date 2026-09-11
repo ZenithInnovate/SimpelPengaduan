@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewResponse;
 use Modules\SimpelCore\Http\Controllers\AdminModulController;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
-use Modules\SimpelPengaduan\Models\Pengaduan;
+use Modules\SimpelPengaduan\Models\PengaduanModel;
 use Modules\SimpelPengaduan\Services\PengaduanService;
 
 defined('BASEPATH') || exit('No direct script access allowed');
@@ -63,30 +63,30 @@ class PengaduanController extends AdminModulController
 
         return datatables()->of($query)
             ->addIndexColumn()
-            ->addColumn('tiket', static function (Pengaduan $row): string {
+            ->addColumn('tiket', static function (PengaduanModel $row): string {
                 return '<span class="badge label-primary">'.$row->nomor_tiket.'</span>';
             })
-            ->addColumn('pelapor', static function (Pengaduan $row): string {
+            ->addColumn('pelapor', static function (PengaduanModel $row): string {
                 $kontak = e($row->telepon);
                 $nama = e($row->nama);
                 $nik = $row->nik ? '<br><small class="text-muted">NIK: '.e($row->nik).'</small>' : '';
 
                 return '<strong>'.$nama.'</strong>'.$nik.'<br><small><i class="fa fa-whatsapp text-success"></i> '.$kontak.'</small>';
             })
-            ->addColumn('laporan', static function (Pengaduan $row): string {
+            ->addColumn('laporan', static function (PengaduanModel $row): string {
                 $judul = '<strong>'.e($row->judul).'</strong>';
                 $ringkasan = '<p class="text-muted mb-0" style="font-size: 12px;">'.e(str_limit($row->isi, 80)).'</p>';
                 $badgeLampiran = $row->foto ? ' <span class="badge label-default"><i class="fa fa-paperclip"></i> Foto</span>' : '';
 
                 return $judul.$badgeLampiran.$ringkasan;
             })
-            ->addColumn('status_badge', static function (Pengaduan $row): string {
+            ->addColumn('status_badge', static function (PengaduanModel $row): string {
                 return '<span class="label label-'.$row->status_badge.'">'.$row->status_label.'</span>';
             })
-            ->addColumn('tgl_lapor', static function (Pengaduan $row): string {
+            ->addColumn('tgl_lapor', static function (PengaduanModel $row): string {
                 return $row->created_at ? $row->created_at->format('d/m/Y H:i') : '-';
             })
-            ->addColumn('aksi', static function (Pengaduan $row): string {
+            ->addColumn('aksi', static function (PengaduanModel $row): string {
                 $btnDetail = View::make('simpel-core::components.buttons.actions.detail', [
                     'url' => site_url('simpel/pengaduan/detail/'.$row->id),
                     'icon' => 'fa-comments',
@@ -108,7 +108,7 @@ class PengaduanController extends AdminModulController
      */
     public function detail(int $id): ViewResponse
     {
-        $pengaduan = Pengaduan::utama()->with(['child'])->findOrFail($id);
+        $pengaduan = PengaduanModel::utama()->with(['child'])->findOrFail($id);
 
         return view('simpel-pengaduan::backend.detail', [
             'pengaduan' => $pengaduan,
@@ -122,7 +122,7 @@ class PengaduanController extends AdminModulController
     {
         isCanJson('u');
 
-        $parent = Pengaduan::utama()->findOrFail($id);
+        $parent = PengaduanModel::utama()->findOrFail($id);
         $this->service->tanggapi($parent, $request->validated(), $request->file('foto'), true);
 
         return json([
@@ -140,7 +140,7 @@ class PengaduanController extends AdminModulController
         isCanJson('u');
 
         $status = (int) request('status');
-        $pengaduan = Pengaduan::utama()->findOrFail($id);
+        $pengaduan = PengaduanModel::utama()->findOrFail($id);
 
         $this->service->ubahStatus($pengaduan, $status, true);
 
@@ -159,7 +159,7 @@ class PengaduanController extends AdminModulController
 
         $ids = (array) (request('ids') ?: request('id'));
         $id = (int) ($ids[0] ?? 0);
-        $pengaduan = Pengaduan::utama()->findOrFail($id);
+        $pengaduan = PengaduanModel::utama()->findOrFail($id);
 
         $this->service->hapus($pengaduan);
 

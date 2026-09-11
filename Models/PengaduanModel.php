@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\SimpelCore\Models\BaseModel;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 
-class Pengaduan extends BaseModel
+class PengaduanModel extends BaseModel
 {
     use ConfigId;
 
@@ -149,4 +149,8 @@ class Pengaduan extends BaseModel
             }
         });
     }
+}
+
+if (! class_exists(Pengaduan::class, false)) {
+    class_alias(PengaduanModel::class, Pengaduan::class);
 }

@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
-use Modules\SimpelPengaduan\Models\Pengaduan;
+use Modules\SimpelPengaduan\Models\PengaduanModel;
 
 /**
  * Data contoh (dummy) untuk demonstrasi.
@@ -51,7 +51,7 @@ class DemoPengaduanSeeder extends Seeder
         $now = Carbon::now();
 
         // 1. Pengaduan Selesai Diproses (PJU Padam)
-        $lapor1 = Pengaduan::create([
+        $lapor1 = PengaduanModel::create([
             'id_pengaduan' => null,
             'nama' => 'Ahmad Fauzi',
             'nik' => '3201012304850001',
@@ -66,7 +66,7 @@ class DemoPengaduanSeeder extends Seeder
         ]);
 
         // Tanggapan 1 dari Admin
-        Pengaduan::create([
+        PengaduanModel::create([
             'id_pengaduan' => $lapor1->id,
             'nama' => 'Pemerintah Desa',
             'nik' => null,
@@ -81,7 +81,7 @@ class DemoPengaduanSeeder extends Seeder
         ]);
 
         // Tanggapan 2 penyelesaian dari Admin
-        Pengaduan::create([
+        PengaduanModel::create([
             'id_pengaduan' => $lapor1->id,
             'nama' => 'Pemerintah Desa',
             'nik' => null,
@@ -96,7 +96,7 @@ class DemoPengaduanSeeder extends Seeder
         ]);
 
         // 2. Pengaduan Sedang Diproses (Saluran Drainase Tersumbat)
-        $lapor2 = Pengaduan::create([
+        $lapor2 = PengaduanModel::create([
             'id_pengaduan' => null,
             'nama' => 'Siti Rahmawati',
             'nik' => '3201015607920002',
@@ -111,7 +111,7 @@ class DemoPengaduanSeeder extends Seeder
         ]);
 
         // Balasan Admin
-        Pengaduan::create([
+        PengaduanModel::create([
             'id_pengaduan' => $lapor2->id,
             'nama' => 'Pemerintah Desa',
             'nik' => null,
@@ -126,7 +126,7 @@ class DemoPengaduanSeeder extends Seeder
         ]);
 
         // 3. Pengaduan Menunggu Diproses (Pohon Rawan Tumbang)
-        Pengaduan::create([
+        PengaduanModel::create([
             'id_pengaduan' => null,
             'nama' => 'Bambang Sudarsono',
             'nik' => '3201011211780003',
