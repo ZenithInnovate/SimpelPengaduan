@@ -26,23 +26,7 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         Model::unguard();
-
-        $version = version_module('SimpelPengaduan');
-
         $this->createSettings([
-            [
-                'judul' => 'Versi Simpel Pengaduan',
-                'key' => 'sp_version',
-                'value' => $version,
-                'keterangan' => 'Versi modul Simpel Pengaduan yang terpasang',
-                'kategori' => 'Simpel Pengaduan',
-                'jenis' => 'input-text',
-                'attribute' => json_encode([
-                    'class' => 'required',
-                    'disabled' => 'disabled',
-                ]),
-                'urut' => 999999,
-            ],
             [
                 'judul' => 'Notifikasi WhatsApp Pengaduan',
                 'key' => 'sp_wa_notif_aktif',
@@ -70,7 +54,7 @@ class SettingSeeder extends Seeder
             ],
         ]);
 
-        SettingAplikasi::where('key', 'sp_version')->update(['value' => $version, 'urut' => 999999]);
+        $this->deleteSetting(['key' => 'sp_version']);
 
         cache()->flush();
     }
