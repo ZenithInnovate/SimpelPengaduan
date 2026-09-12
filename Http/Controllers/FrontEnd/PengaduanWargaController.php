@@ -117,6 +117,27 @@ class PengaduanWargaController extends Web_Controller
     {
         $parent = PengaduanModel::utama()->findOrFail($id);
 
+        // IDOR guard: $id murni primary key auto-increment yang bisa ditebak
+        // (dikirim balik ke browser oleh lacak() sebagai #balas-pengaduan-id).
+        // Tanpa ini siapa pun bisa membalas tiket pengaduan warga lain hanya
+        // dengan mengganti angka id -- wajib buktikan tahu tiket/NIK/WA
+        // pemilik tiket ini, sama seperti verifikasi di lacak().
+        $kataKunci = trim((string) request('kata_kunci'));
+        $milikSendiri = $kataKunci !== '' && (
+            $parent->nomor_tiket === $kataKunci
+            || (! empty($parent->nik) && $parent->nik === $kataKunci)
+            || (! empty($parent->telepon) && $parent->telepon === $kataKunci)
+        );
+
+        if (! $milikSendiri) {
+            json([
+                'success' => false,
+                'message' => 'Nomor tiket, NIK, atau nomor WhatsApp tidak sesuai dengan pengaduan ini.',
+            ], 403);
+
+            return;
+        }
+
         $balasan = $this->service->tanggapi(
             $parent,
             $request->validated(),

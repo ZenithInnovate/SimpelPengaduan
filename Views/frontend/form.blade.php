@@ -352,6 +352,7 @@
             e.preventDefault();
             var id = $('#balas-pengaduan-id').val();
             var isi = $('#balas-isi').val().trim();
+            var kataKunciBalas = $('#input-kata-kunci').val().trim();
             if (!id || !isi) return;
 
             var $btn = $('#btn-submit-balas');
@@ -370,7 +371,7 @@
             $.ajax({
                 url: '{{ site_url("layanan-pengaduan/tanggapi") }}/' + id,
                 type: 'POST',
-                data: { isi: isi },
+                data: { isi: isi, kata_kunci: kataKunciBalas },
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 success: function (res) {
                     clearTimeout(loadingTimer);
@@ -387,9 +388,13 @@
                     }
                     Swal.fire('Terkirim', 'Balasan Anda berhasil dikirim ke petugas desa.', 'success');
                 },
-                error: function () {
+                error: function (xhr) {
                     clearTimeout(loadingTimer);
-                    Swal.fire('Gagal', 'Gagal mengirim balasan.', 'error');
+                    var pesan = 'Gagal mengirim balasan.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        pesan = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Gagal', pesan, 'error');
                 },
                 complete: function () {
                     $btn.prop('disabled', false);
