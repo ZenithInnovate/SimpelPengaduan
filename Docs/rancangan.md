@@ -51,7 +51,7 @@ Prefix URL: `simpel/pengaduan` (Namespace: `Modules\SimpelPengaduan\Http\Control
 - `GET  /detail/{id}` -> `PengaduanController@detail`: Halaman detail aduan, data pelapor, lampiran, dan riwayat utas tanggapan.
 - `POST /tanggapi/{id}` -> `PengaduanController@tanggapi`: Menambah balasan resmi admin desa ke dalam utas.
 - `POST /status/{id}` -> `PengaduanController@ubahStatus`: Mengubah status tindak lanjut tiket.
-- `POST /delete` -> `PengaduanController@hapus`: Hapus tiket aduan bersangkutan.
+- `POST /delete` -> `PengaduanController@destroy`: Hapus tiket aduan bersangkutan.
 
 ### 3.2 Frontend (Portal Publik Warga)
 Prefix URL: `layanan-pengaduan` (Namespace: `Modules\SimpelPengaduan\Http\Controllers\FrontEnd`)

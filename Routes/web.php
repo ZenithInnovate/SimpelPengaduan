@@ -18,7 +18,7 @@ Route::group('simpel/pengaduan', ['namespace' => 'SimpelPengaduan/BackEnd'], sta
     Route::get('detail/{id}', 'PengaduanController@detail');
     Route::post('tanggapi/{id}', 'PengaduanController@tanggapi');
     Route::post('status/{id}', 'PengaduanController@ubahStatus');
-    Route::match(['GET', 'POST'], 'delete', 'PengaduanController@hapus');
+    Route::match(['GET', 'POST'], 'delete', 'PengaduanController@destroy');
 });
 
 // FRONTEND — portal publik pelaporan & pelacakan tiket pengaduan
