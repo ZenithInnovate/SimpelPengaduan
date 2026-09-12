@@ -153,7 +153,7 @@ class PengaduanController extends AdminModulController
     /**
      * Hapus pengaduan
      */
-    public function delete()
+    public function hapus()
     {
         isCanJson('h');
 
