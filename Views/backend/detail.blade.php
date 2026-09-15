@@ -5,7 +5,7 @@
     'title' => 'Detail & Utas Pengaduan',
     'sub' => 'Simpel Pengaduan',
     'breadcrumb' => [
-        ['url' => site_url('simpel/pengaduan'), 'label' => 'Pengaduan'],
+        ['url' => simpel_url('simpel/pengaduan'), 'label' => 'Pengaduan'],
         'Detail Tiket ' . $pengaduan->nomor_tiket
     ],
 ])
@@ -58,7 +58,7 @@
                     </ul>
 
                     {{-- Form Cepat Perbarui Status --}}
-                    <form id="form_status" action="{{ site_url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
+                    <form id="form_status" action="{{ simpel_url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
                         @include('simpel-core::components.form.csrf')
                         <div class="form-group" style="margin-top: 15px;">
                             <label class="control-label">Perbarui Status Penanganan:</label>
@@ -77,7 +77,7 @@
 
                     <div style="margin-top: 15px;">
                         @include('simpel-core::components.buttons.kembali', [
-                            'url' => site_url('simpel/pengaduan'),
+                            'url' => simpel_url('simpel/pengaduan'),
                             'label' => 'Daftar Pengaduan',
                         ])
                     </div>
@@ -166,7 +166,7 @@
                 'icon' => 'fa-reply',
                 'noBody' => true,
             ])
-                <form id="form_validasi" action="{{ site_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
+                <form id="form_validasi" action="{{ simpel_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
                     @include('simpel-core::components.form.csrf')
                     <div class="box-body">
                         @include('simpel-core::components.form.field', [

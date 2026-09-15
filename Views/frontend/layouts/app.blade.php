@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @php
-        $namaWilayahDesa = ucwords(setting('sebutan_desa', 'Desa')) . ' ' . identitas('nama_desa');
-        $namaKecamatan   = ucwords(setting('sebutan_kecamatan', 'Kecamatan')) . ' ' . identitas('nama_kecamatan');
-        $namaProvinsi    = identitas('nama_propinsi') ?: identitas('nama_provinsi');
+        $namaWilayahDesa = ucwords(simpel_setting('sebutan_desa', 'Desa')) . ' ' . simpel_identitas('nama_desa');
+        $namaKecamatan   = ucwords(simpel_setting('sebutan_kecamatan', 'Kecamatan')) . ' ' . simpel_identitas('nama_kecamatan');
+        $namaProvinsi    = simpel_identitas('nama_propinsi') ?: simpel_identitas('nama_provinsi');
         $judulLayanan    = 'Layanan Pengaduan Warga ' . $namaWilayahDesa;
         $pageTitle       = trim($__env->yieldContent('title', ''));
         $fullTitle       = ($pageTitle ? $pageTitle . ' | ' : '') . $judulLayanan . ' - ' . $namaKecamatan;
         $deskripsiSeo    = "Portal Aspirasi & Layanan Pengaduan Masyarakat {$namaWilayahDesa}, {$namaKecamatan}, {$namaProvinsi}. Sampaikan keluhan, aspirasi, dan pantau progres penanganan secara transparan.";
-        $logoDesaUrl     = gambar_desa(identitas('logo'));
+        $logoDesaUrl     = gambar_desa(simpel_identitas('logo'));
         $faviconUrl      = favico_desa();
     @endphp
 
@@ -21,7 +21,7 @@
 
     <!-- SEO & Meta -->
     <meta name="description" content="{{ $deskripsiSeo }}">
-    <meta name="keywords" content="Pengaduan Desa, Aspirasi Warga, Layanan Pengaduan, {{ identitas('nama_desa') }}, {{ identitas('nama_kecamatan') }}, Transparansi Desa">
+    <meta name="keywords" content="Pengaduan Desa, Aspirasi Warga, Layanan Pengaduan, {{ simpel_identitas('nama_desa') }}, {{ simpel_identitas('nama_kecamatan') }}, Transparansi Desa">
     <meta name="author" content="Pemerintah {{ $namaWilayahDesa }}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ current_url() }}">
@@ -84,7 +84,7 @@
     <!-- Header Navbar -->
     <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-sm backdrop-blur-md bg-white/95">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
-            <a href="{{ site_url('layanan-pengaduan') }}" class="flex items-center gap-3 group">
+            <a href="{{ simpel_url('layanan-pengaduan') }}" class="flex items-center gap-3 group">
                 <span class="h-11 w-11 rounded-xl bg-slate-50 p-1 border border-slate-200 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group-hover:scale-105 transition transform">
                     <img src="{{ gambar_desa($desa->logo ?? null) }}" alt="Logo Desa" class="h-9 w-9 object-contain">
                 </span>
@@ -93,13 +93,13 @@
                         Layanan Pengaduan Warga
                     </div>
                     <div class="text-xs text-slate-500 font-medium">
-                        {{ ucwords(setting('sebutan_desa', 'Desa')) }} {{ identitas('nama_desa') }}
+                        {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}
                     </div>
                 </div>
             </a>
 
             <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
-                <a href="{{ site_url() }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
+                <a href="{{ simpel_url() }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
                     <i class="fa fa-home mr-1"></i> Beranda Web
                 </a>
             </div>
@@ -114,7 +114,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 font-medium">
         <div class="max-w-6xl mx-auto px-4">
-            &copy; {{ date('Y') }} Pemerintah {{ ucwords(setting('sebutan_desa', 'Desa')) }} {{ identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
+            &copy; {{ date('Y') }} Pemerintah {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
         </div>
     </footer>
 

@@ -42,7 +42,7 @@ class DemoPengaduanSeeder extends Seeder
 
         Model::unguard();
 
-        $configId = identitas('id');
+        $configId = simpel_identitas('id');
 
         if (SettingAplikasi::where('key', self::PENANDA)->where('config_id', $configId)->value('value') === '1') {
             return;

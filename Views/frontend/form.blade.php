@@ -223,7 +223,7 @@
             }, 1000);
 
             $.ajax({
-                url: '{{ site_url("layanan-pengaduan/kirim") }}',
+                url: '{{ simpel_url("layanan-pengaduan/kirim") }}',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -281,7 +281,7 @@
             }, 1000);
 
             $.ajax({
-                url: '{{ site_url("layanan-pengaduan/lacak") }}',
+                url: '{{ simpel_url("layanan-pengaduan/lacak") }}',
                 type: 'GET',
                 data: { kata_kunci: kataKunci },
                 success: function (res) {
@@ -369,7 +369,7 @@
             }, 1000);
 
             $.ajax({
-                url: '{{ site_url("layanan-pengaduan/tanggapi") }}/' + id,
+                url: '{{ simpel_url("layanan-pengaduan/tanggapi") }}/' + id,
                 type: 'POST',
                 data: { isi: isi, kata_kunci: kataKunciBalas },
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },

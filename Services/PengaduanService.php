@@ -15,7 +15,6 @@ namespace Modules\SimpelPengaduan\Services;
 
 use App\Models\SettingAplikasi;
 use Exception;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 use Modules\SimpelPengaduan\Models\PengaduanModel;
@@ -171,11 +170,20 @@ class PengaduanService
         $lokasiRelatif = defined('LOKASI_PENGADUAN') ? LOKASI_PENGADUAN : 'desa/upload/pengaduan/';
         $targetDir = FCPATH.$lokasiRelatif;
 
-        if (! File::isDirectory($targetDir)) {
-            File::makeDirectory($targetDir, 0755, true, true);
-        }
+        // simpel_folder() (bukan folder() langsung / mkdir polos) agar portabel di luar
+        // runtime CI3 dan tetap menyematkan .htaccess anti-eksekusi PHP saat di OpenSID
+        simpel_folder($targetDir);
 
-        $ekstensi = $file->getClientOriginalExtension();
+        // Gunakan ekstensi dari MIME type sesungguhnya, bukan klaim getClientOriginalExtension()
+        $mimeToExt = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp',
+            'image/gif' => 'gif',
+        ];
+        $mime = $file->getMimeType();
+        $ekstensi = $mimeToExt[$mime] ?? 'jpg';
+
         $namaFile = 'pengaduan_'.date('YmdHis').'_'.Str::random(8).'.'.$ekstensi;
         $file->move($targetDir, $namaFile);
 

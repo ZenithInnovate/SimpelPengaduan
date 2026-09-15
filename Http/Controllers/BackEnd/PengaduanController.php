@@ -88,13 +88,13 @@ class PengaduanController extends AdminModulController
             })
             ->addColumn('aksi', static function (PengaduanModel $row): string {
                 $btnDetail = View::make('simpel-core::components.buttons.actions.detail', [
-                    'url' => site_url('simpel/pengaduan/detail/'.$row->id),
+                    'url' => simpel_url('simpel/pengaduan/detail/'.$row->id),
                     'icon' => 'fa-comments',
                     'title' => 'Utas & Tanggapi',
                 ])->render();
                 $btnDelete = View::make('simpel-core::components.buttons.actions.delete', [
                     'id' => $row->id,
-                    'url' => site_url('simpel/pengaduan/delete'),
+                    'url' => simpel_url('simpel/pengaduan/delete'),
                 ])->render();
 
                 return '<div class="btn-group">'.$btnDetail.' '.$btnDelete.'</div>';
@@ -128,7 +128,7 @@ class PengaduanController extends AdminModulController
         return json([
             'status' => 'success',
             'message' => 'Tanggapan berhasil dikirim ke pelapor.',
-            'redirect_url' => site_url('simpel/pengaduan/detail/'.$id),
+            'redirect_url' => simpel_url('simpel/pengaduan/detail/'.$id),
         ]);
     }
 
