@@ -127,7 +127,7 @@ class PengaduanController extends AdminModulController
 
         return json([
             'status' => 'success',
-            'message' => 'Tanggapan berhasil dikirim ke pelapor.',
+            'message' => __('simpel-pengaduan::pesan.sukses_tanggapi'),
             'redirect_url' => simpel_url('simpel/pengaduan/detail/'.$id),
         ]);
     }
@@ -146,7 +146,7 @@ class PengaduanController extends AdminModulController
 
         return json([
             'status' => 'success',
-            'message' => 'Status pengaduan berhasil diperbarui.',
+            'message' => __('simpel-pengaduan::pesan.sukses_ubah_status'),
         ]);
     }
 
@@ -165,7 +165,7 @@ class PengaduanController extends AdminModulController
 
         return json([
             'status' => 'success',
-            'message' => 'Pengaduan berhasil dihapus.',
+            'message' => simpel_pesan('simpel-core::pesan.sukses_hapus'),
         ]);
     }
 }
