@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @php
+        use Carbon\Carbon;
+
         $namaWilayahDesa = ucwords(simpel_setting('sebutan_desa', 'Desa')) . ' ' . simpel_identitas('nama_desa');
         $namaKecamatan   = ucwords(simpel_setting('sebutan_kecamatan', 'Kecamatan')) . ' ' . simpel_identitas('nama_kecamatan');
         $namaProvinsi    = simpel_identitas('nama_propinsi') ?: simpel_identitas('nama_provinsi');
@@ -114,7 +116,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 font-medium">
         <div class="max-w-6xl mx-auto px-4">
-            &copy; {{ date('Y') }} Pemerintah {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
+            &copy; {{ Carbon::now()->year }} Pemerintah {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
         </div>
     </footer>
 

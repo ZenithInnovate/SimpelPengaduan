@@ -14,6 +14,7 @@
 namespace Modules\SimpelPengaduan\Services;
 
 use App\Models\SettingAplikasi;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Str;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
@@ -184,7 +185,7 @@ class PengaduanService
         $mime = $file->getMimeType();
         $ekstensi = $mimeToExt[$mime] ?? 'jpg';
 
-        $namaFile = 'pengaduan_'.date('YmdHis').'_'.Str::random(8).'.'.$ekstensi;
+        $namaFile = 'pengaduan_'.Carbon::now()->format('YmdHis').'_'.Str::random(8).'.'.$ekstensi;
         $file->move($targetDir, $namaFile);
 
         return $namaFile;
