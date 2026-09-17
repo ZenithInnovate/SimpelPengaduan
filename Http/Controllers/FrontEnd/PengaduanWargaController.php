@@ -13,15 +13,16 @@
 
 namespace Modules\SimpelPengaduan\Http\Controllers\FrontEnd;
 
+use Modules\SimpelCore\Http\Controllers\WebModulController;
 use Modules\SimpelPengaduan\Http\Requests\KirimPengaduanRequest;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
 use Modules\SimpelPengaduan\Models\PengaduanModel;
 use Modules\SimpelPengaduan\Services\PengaduanService;
-use Web_Controller;
+use Modules\SimpelPengaduan\Transforms\PengaduanTransform;
 
 defined('BASEPATH') || exit('No direct script access allowed');
 
-class PengaduanWargaController extends Web_Controller
+class PengaduanWargaController extends WebModulController
 {
     protected PengaduanService $service;
 
@@ -75,7 +76,7 @@ class PengaduanWargaController extends Web_Controller
 
         $pengaduan = $this->service->cariTiket($kataKunci);
 
-        if (! $pengaduan) {
+        if (! $pengaduan instanceof \Modules\SimpelPengaduan\Models\PengaduanModel) {
             json([
                 'success' => false,
                 'message' => 'Data pengaduan tidak ditemukan. Pastikan nomor tiket atau kontak sesuai.',
@@ -84,29 +85,9 @@ class PengaduanWargaController extends Web_Controller
             return;
         }
 
-        $balasan = $pengaduan->child->map(function ($item) {
-            return [
-                'pengirim' => $item->nama,
-                'isi' => $item->isi,
-                'foto_url' => $item->foto_url,
-                'waktu' => $item->created_at ? $item->created_at->format('d M Y H:i') : '',
-            ];
-        });
-
         json([
             'success' => true,
-            'data' => [
-                'id' => $pengaduan->id,
-                'nomor_tiket' => $pengaduan->nomor_tiket,
-                'judul' => $pengaduan->judul,
-                'isi' => $pengaduan->isi,
-                'pelapor' => $pengaduan->nama,
-                'status' => $pengaduan->status_label,
-                'status_badge' => $pengaduan->status_badge,
-                'foto_url' => $pengaduan->foto_url,
-                'tgl_lapor' => $pengaduan->created_at ? $pengaduan->created_at->format('d M Y H:i') : '',
-                'balasan' => $balasan,
-            ],
+            'data' => PengaduanTransform::transformDetail($pengaduan),
         ]);
     }
 
@@ -117,19 +98,8 @@ class PengaduanWargaController extends Web_Controller
     {
         $parent = PengaduanModel::utama()->findOrFail($id);
 
-        // IDOR guard: $id murni primary key auto-increment yang bisa ditebak
-        // (dikirim balik ke browser oleh lacak() sebagai #balas-pengaduan-id).
-        // Tanpa ini siapa pun bisa membalas tiket pengaduan warga lain hanya
-        // dengan mengganti angka id -- wajib buktikan tahu tiket/NIK/WA
-        // pemilik tiket ini, sama seperti verifikasi di lacak().
-        $kataKunci = trim((string) request('kata_kunci'));
-        $milikSendiri = $kataKunci !== '' && (
-            $parent->nomor_tiket === $kataKunci
-            || (! empty($parent->nik) && $parent->nik === $kataKunci)
-            || (! empty($parent->telepon) && $parent->telepon === $kataKunci)
-        );
-
-        if (! $milikSendiri) {
+        // IDOR guard: verifikasi kata kunci (tiket/NIK/WA) terhadap pemilik tiket
+        if (! $parent->isCocokKredensial(request('kata_kunci'))) {
             json([
                 'success' => false,
                 'message' => 'Nomor tiket, NIK, atau nomor WhatsApp tidak sesuai dengan pengaduan ini.',
@@ -148,12 +118,7 @@ class PengaduanWargaController extends Web_Controller
         json([
             'success' => true,
             'message' => 'Balasan berhasil dikirim.',
-            'data' => [
-                'pengirim' => $balasan->nama,
-                'isi' => $balasan->isi,
-                'foto_url' => $balasan->foto_url,
-                'waktu' => $balasan->created_at ? $balasan->created_at->format('d M Y H:i') : '',
-            ],
+            'data' => $balasan->toBalasanArray(),
         ]);
     }
 }

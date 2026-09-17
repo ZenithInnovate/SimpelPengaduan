@@ -136,6 +136,42 @@ class PengaduanModel extends BaseModel
         return $this->status_enum ? $this->status_enum->badgeClass() : 'default';
     }
 
+    /**
+     * Memeriksa apakah kata kunci cocok dengan nomor tiket, NIK, atau nomor telepon pengaduan.
+     */
+    public function isCocokKredensial(?string $kataKunci): bool
+    {
+        $kataKunci = trim((string) $kataKunci);
+
+        if ($kataKunci === '') {
+            return false;
+        }
+
+        return $this->nomor_tiket === $kataKunci
+            || (! empty($this->nik) && $this->nik === $kataKunci)
+            || (! empty($this->telepon) && $this->telepon === $kataKunci);
+    }
+
+    /**
+     * Transformasi representasi array ringkas untuk balasan/tanggapan pengaduan.
+     *
+     * @return array<string, mixed>
+     */
+    public function toBalasanArray(): array
+    {
+        return \Modules\SimpelPengaduan\Transforms\PengaduanTransform::transformBalasan($this);
+    }
+
+    /**
+     * Transformasi representasi detail lengkap pengaduan beserta riwayat balasan untuk pelacakan publik.
+     *
+     * @return array<string, mixed>
+     */
+    public function toDetailLacakArray(): array
+    {
+        return \Modules\SimpelPengaduan\Transforms\PengaduanTransform::transformDetail($this);
+    }
+
     public static function boot(): void
     {
         parent::boot();

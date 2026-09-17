@@ -26,17 +26,7 @@ class SimpelPengaduanServiceProvider extends ServiceProvider
     {
         $this->loadJson();
         $this->bootModule();
-        $this->loadHelpers();
     }
 
     public function register(): void {}
-
-    private function loadHelpers(): void
-    {
-        $helper = __DIR__.'/../Helpers/simpel_pengaduan_helper.php';
-
-        if (file_exists($helper)) {
-            require_once $helper;
-        }
-    }
 }

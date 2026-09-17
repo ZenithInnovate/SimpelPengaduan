@@ -119,7 +119,7 @@ class PengaduanService
 
         if ($updated && $kirimNotif) {
             $statusEnum = StatusPengaduanEnum::fromValue($status);
-            $namaStatus = $statusEnum ? $statusEnum->label() : 'Diperbarui';
+            $namaStatus = $statusEnum instanceof \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum ? $statusEnum->label() : 'Diperbarui';
             $pesan = "Halo {$pengaduan->nama},\n\nStatus pengaduan Anda dengan nomor tiket *{$pengaduan->nomor_tiket}* telah diperbarui menjadi: *{$namaStatus}*.\n\nJudul: {$pengaduan->judul}\n\nTerima kasih atas partisipasi Anda.";
             $this->kirimWhatsApp($pengaduan->telepon, $pesan);
         }

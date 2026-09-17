@@ -11,6 +11,8 @@
  * -----------------------------------------------------------------------------
  */
 
+declare(strict_types=1);
+
 namespace Modules\SimpelPengaduan\Services;
 
 class BuildService

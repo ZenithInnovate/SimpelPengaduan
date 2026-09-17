@@ -11,6 +11,7 @@
  * -----------------------------------------------------------------------------
  */
 
+declare(strict_types=1);
 return [
     // Respon Pesan (Kunci Bahasa Inggris)
     'response_success' => 'Tanggapan berhasil dikirim ke pelapor.',
