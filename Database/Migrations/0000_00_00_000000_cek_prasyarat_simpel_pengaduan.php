@@ -12,6 +12,7 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
+use Modules\SimpelCore\Services\ModulService;
 
 return new class extends Migration
 {
@@ -20,7 +21,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $svc = \Modules\SimpelCore\Services\ModulService::class;
+        $svc = ModulService::class;
 
         if (class_exists($svc)) {
             $svc::pastikanPrasyarat(__DIR__.'/../..');

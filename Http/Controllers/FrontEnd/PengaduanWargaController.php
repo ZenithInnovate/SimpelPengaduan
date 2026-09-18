@@ -76,7 +76,7 @@ class PengaduanWargaController extends WebModulController
 
         $pengaduan = $this->service->cariTiket($kataKunci);
 
-        if (! $pengaduan instanceof \Modules\SimpelPengaduan\Models\PengaduanModel) {
+        if (! $pengaduan instanceof PengaduanModel) {
             json([
                 'success' => false,
                 'message' => 'Data pengaduan tidak ditemukan. Pastikan nomor tiket atau kontak sesuai.',

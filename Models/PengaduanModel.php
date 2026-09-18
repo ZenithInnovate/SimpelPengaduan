@@ -13,12 +13,13 @@
 
 namespace Modules\SimpelPengaduan\Models;
 
-use App\Models\Penduduk;
-use App\Traits\ConfigId;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\SimpelCore\Models\BaseModel;
+use Modules\SimpelCore\Models\Modify\PendudukModel;
+use Modules\SimpelCore\Traits\ConfigId;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
+use Modules\SimpelPengaduan\Transforms\PengaduanTransform;
 
 class PengaduanModel extends BaseModel
 {
@@ -55,7 +56,7 @@ class PengaduanModel extends BaseModel
      */
     public function penduduk(): BelongsTo
     {
-        return $this->belongsTo(Penduduk::class, 'nik', 'nik');
+        return $this->belongsTo(PendudukModel::class, 'nik', 'nik');
     }
 
     /**
@@ -159,7 +160,7 @@ class PengaduanModel extends BaseModel
      */
     public function toBalasanArray(): array
     {
-        return \Modules\SimpelPengaduan\Transforms\PengaduanTransform::transformBalasan($this);
+        return PengaduanTransform::transformBalasan($this);
     }
 
     /**
@@ -169,7 +170,7 @@ class PengaduanModel extends BaseModel
      */
     public function toDetailLacakArray(): array
     {
-        return \Modules\SimpelPengaduan\Transforms\PengaduanTransform::transformDetail($this);
+        return PengaduanTransform::transformDetail($this);
     }
 
     public static function boot(): void

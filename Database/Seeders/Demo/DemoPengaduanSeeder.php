@@ -44,7 +44,7 @@ class DemoPengaduanSeeder extends Seeder
 
         $configId = simpel_identitas('id');
 
-        if (SettingAplikasi::where('key', self::PENANDA)->where('config_id', $configId)->value('value') === '1') {
+        if ((string) simpel_setting(self::PENANDA) === '1') {
             return;
         }
 

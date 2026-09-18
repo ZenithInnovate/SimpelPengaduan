@@ -13,12 +13,13 @@
 
 namespace Modules\SimpelPengaduan\Services;
 
-use App\Models\SettingAplikasi;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Str;
 use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 use Modules\SimpelPengaduan\Models\PengaduanModel;
+use Modules\SimpelWhatsApp\Services\KirimPesanService;
+use Modules\SimpelWhatsApp\Services\PesanService;
 
 class PengaduanService
 {
@@ -119,7 +120,7 @@ class PengaduanService
 
         if ($updated && $kirimNotif) {
             $statusEnum = StatusPengaduanEnum::fromValue($status);
-            $namaStatus = $statusEnum instanceof \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum ? $statusEnum->label() : 'Diperbarui';
+            $namaStatus = $statusEnum instanceof StatusPengaduanEnum ? $statusEnum->label() : 'Diperbarui';
             $pesan = "Halo {$pengaduan->nama},\n\nStatus pengaduan Anda dengan nomor tiket *{$pengaduan->nomor_tiket}* telah diperbarui menjadi: *{$namaStatus}*.\n\nJudul: {$pengaduan->judul}\n\nTerima kasih atas partisipasi Anda.";
             $this->kirimWhatsApp($pengaduan->telepon, $pesan);
         }
@@ -205,7 +206,7 @@ class PengaduanService
         $this->kirimWhatsApp($pengaduan->telepon, $pesanWarga);
 
         // Notifikasi ke petugas/admin jika dikonfigurasi
-        $noAdmin = SettingAplikasi::where('key', 'sp_wa_admin_nomor')->value('value');
+        $noAdmin = simpel_setting('sp_wa_admin_nomor');
         if (! empty($noAdmin)) {
             $pesanAdmin = "🔔 *PENGADUAN WARGA BARU*\n\n"
                 ."Nomor Tiket: *{$pengaduan->nomor_tiket}*\n"
@@ -227,7 +228,7 @@ class PengaduanService
                 ."Status saat ini: *{$parent->status_label}*.";
             $this->kirimWhatsApp($parent->telepon, $pesan);
         } else {
-            $noAdmin = SettingAplikasi::where('key', 'sp_wa_admin_nomor')->value('value');
+            $noAdmin = simpel_setting('sp_wa_admin_nomor');
             if (! empty($noAdmin)) {
                 $pesan = "🔔 *BALASAN WARGA PADA TIKET {$parent->nomor_tiket}*\n\n"
                     ."Pelapor: {$parent->nama}\n"
@@ -246,17 +247,17 @@ class PengaduanService
             return;
         }
 
-        $aktif = SettingAplikasi::where('key', 'sp_wa_notif_aktif')->value('value');
+        $aktif = simpel_setting('sp_wa_notif_aktif');
         if ($aktif === '0') {
             return;
         }
 
         try {
-            if (class_exists(\Modules\SimpelWhatsApp\Services\KirimPesanService::class)) {
-                $kirimService = new \Modules\SimpelWhatsApp\Services\KirimPesanService;
+            if (class_exists(KirimPesanService::class)) {
+                $kirimService = new KirimPesanService;
                 $token = $kirimService->tokenAktif();
                 if (! empty($token)) {
-                    \Modules\SimpelWhatsApp\Services\PesanService::singleSend($token, $target, $pesan);
+                    PesanService::singleSend($token, $target, $pesan);
                 }
             }
         } catch (Exception) {
