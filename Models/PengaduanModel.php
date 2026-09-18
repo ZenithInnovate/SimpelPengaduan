@@ -108,7 +108,7 @@ class PengaduanModel extends BaseModel
             : time();
         $ym = date('Ym', $timestamp);
 
-        return 'LPR-' . $ym . '-' . str_pad((string) $this->id, 4, '0', STR_PAD_LEFT);
+        return 'LPR-'.$ym.'-'.str_pad((string) $this->id, 4, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -130,10 +130,10 @@ class PengaduanModel extends BaseModel
         }
 
         $path = defined('LOKASI_PENGADUAN') ? LOKASI_PENGADUAN : 'desa/upload/pengaduan/';
-        $fullFile = FCPATH . $path . $this->foto;
+        $fullFile = FCPATH.$path.$this->foto;
 
         if (file_exists($fullFile)) {
-            return base_url($path . $this->foto);
+            return base_url($path.$this->foto);
         }
 
         return null;
