@@ -1,3 +1,6 @@
+@php
+use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
+@endphp
 @extends('admin.layouts.index')
 @include('simpel-core::components.assets.style')
 @include('simpel-core::components.page.header', [
@@ -68,7 +71,7 @@
                 <label class="control-label">Filter Status</label>
                 <select id="filter-status" class="form-control input-sm">
                     <option value="">— Semua Status —</option>
-                    @foreach (\Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::cases() as $st)
+                    @foreach (StatusPengaduanEnum::cases() as $st)
                         <option value="{{ $st->value }}">{{ $st->label() }}</option>
                     @endforeach
                 </select>

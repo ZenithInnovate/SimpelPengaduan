@@ -13,6 +13,7 @@
 
 namespace Modules\SimpelPengaduan\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\SimpelCore\Models\BaseModel;
@@ -98,11 +99,16 @@ class PengaduanModel extends BaseModel
     }
 
     /**
-     * Accessor nomor tiket virtual
+     * Accessor nomor tiket virtual dalam format LPR-YYYYMM-XXXX.
      */
     public function getNomorTiketAttribute(): string
     {
-        return simpel_pengaduan_nomor_tiket($this->id, $this->created_at);
+        $timestamp = $this->created_at
+            ? Carbon::parse((string) $this->created_at)->timestamp
+            : time();
+        $ym = date('Ym', $timestamp);
+
+        return 'LPR-' . $ym . '-' . str_pad((string) $this->id, 4, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -114,11 +120,23 @@ class PengaduanModel extends BaseModel
     }
 
     /**
-     * Accessor URL lampiran foto
+     * Accessor URL foto lampiran pengaduan.
+     * Mengembalikan null jika foto kosong atau file tidak ditemukan.
      */
     public function getFotoUrlAttribute(): ?string
     {
-        return simpel_pengaduan_foto_url($this->foto);
+        if (empty($this->foto)) {
+            return null;
+        }
+
+        $path = defined('LOKASI_PENGADUAN') ? LOKASI_PENGADUAN : 'desa/upload/pengaduan/';
+        $fullFile = FCPATH . $path . $this->foto;
+
+        if (file_exists($fullFile)) {
+            return base_url($path . $this->foto);
+        }
+
+        return null;
     }
 
     /**
@@ -171,6 +189,25 @@ class PengaduanModel extends BaseModel
     public function toDetailLacakArray(): array
     {
         return PengaduanTransform::transformDetail($this);
+    }
+
+    /**
+     * Ekstrak ID numerik dari nomor tiket format LPR-YYYYMM-XXXX atau string numerik biasa.
+     * Mengembalikan null jika format tidak dikenali.
+     */
+    public static function parseIdFromTiket(string $tiket): ?int
+    {
+        $tiket = trim($tiket);
+
+        if (preg_match('/^LPR-\d{6}-(\d+)$/i', $tiket, $matches)) {
+            return (int) $matches[1];
+        }
+
+        if (ctype_digit($tiket)) {
+            return (int) $tiket;
+        }
+
+        return null;
     }
 
     public static function boot(): void

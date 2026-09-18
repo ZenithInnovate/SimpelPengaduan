@@ -1,3 +1,6 @@
+@php
+use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
+@endphp
 @extends('admin.layouts.index')
 @include('simpel-core::components.assets.style')
 @include('simpel-core::components.assets.form_request')
@@ -64,7 +67,7 @@
                             <label class="control-label">Perbarui Status Penanganan:</label>
                             <div class="input-group">
                                 <select name="status" class="form-control input-sm">
-                                    @foreach (\Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::cases() as $st)
+                                    @foreach (StatusPengaduanEnum::cases() as $st)
                                         <option value="{{ $st->value }}" @selected($pengaduan->status == $st->value)>{{ $st->label() }}</option>
                                     @endforeach
                                 </select>
@@ -188,8 +191,8 @@
                                     'horizontal'  => false,
                                     'emptyOption' => '— Biarkan Status Saat Ini (' . $pengaduan->status_label . ') —',
                                     'options'     => [
-                                        \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::DIPROSES->value => 'Set ke: ' . \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::DIPROSES->label(),
-                                        \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::SELESAI->value => 'Set ke: ' . \Modules\SimpelPengaduan\Enums\StatusPengaduanEnum::SELESAI->label(),
+                                        StatusPengaduanEnum::DIPROSES->value => 'Set ke: ' . StatusPengaduanEnum::DIPROSES->label(),
+                                        StatusPengaduanEnum::SELESAI->value => 'Set ke: ' . StatusPengaduanEnum::SELESAI->label(),
                                     ],
                                 ])
                             </div>

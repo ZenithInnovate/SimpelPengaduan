@@ -146,7 +146,7 @@ class PengaduanService
      */
     public function cariTiket(string $kataKunci): ?PengaduanModel
     {
-        $id = simpel_pengaduan_id_from_tiket($kataKunci);
+        $id = PengaduanModel::parseIdFromTiket($kataKunci);
 
         if ($id) {
             $item = PengaduanModel::utama()->find($id);
