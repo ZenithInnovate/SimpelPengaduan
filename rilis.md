@@ -1,4 +1,5 @@
 ##### 🔒 **CATATAN RILIS v1.0.1**
+- **Skema module.json diseragamkan (2026-10-14)**: kunci non-baku (`slug`, `providers`, `aliases`, `files`, `order`, `requires`, `keywords`, `author_url`) dibuang; helper dimuat otomatis oleh ProviderTrait.
 - **Sinkronisasi Versi module.json ke v1.0.1 (2026-09-18)**: Menyelaraskan nomor versi pada berkas `module.json` menjadi `1.0.1` agar sinkron dengan catatan rilis aktif per CODING-STANDARDS.md §16.
 - **Eliminasi Helper Global Sendiri ke Accessor & Static Method Model (2026-09-18)**: Memindahkan `simpel_pengaduan_nomor_tiket()` ke model accessor `getNomorTiketAttribute()`, `simpel_pengaduan_foto_url()` ke `getFotoUrlAttribute()`, dan `simpel_pengaduan_id_from_tiket()` ke static method `PengaduanModel::parseIdFromTiket()`; berkas helper dikosongkan per CODING-STANDARDS.md §19.
 - **Eliminasi Inline FQCN pada PengaduanWargaController, PengaduanModel, dan PengaduanService (2026-09-18)**: Mengalihkan pemanggilan inline FQCN `PengaduanModel`, `PengaduanTransform`, `StatusPengaduanEnum`, `KirimPesanService`, dan `PesanService` ke pernyataan impor `use` di header masing-masing berkas per CODING-STANDARDS.md §32.
