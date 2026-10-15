@@ -63,6 +63,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
     </div>
 
     @include('simpel-core::components.card.open', [
+        'buttons' => ['panduan' => ['url' => simpel_url('simpel/panduan/SimpelPengaduan/panduan')]],
         'type' => 'box-primary',
         'row' => true,
     ])

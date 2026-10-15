@@ -1,4 +1,5 @@
 ##### 🔒 **CATATAN RILIS v1.0.1**
+- **Panduan penggunaan per menu (2026-10-16)**: Tombol **Panduan** pada halaman daftar pengaduan. Panduan menjelaskan fungsi dan isian tiap menu.
 - **UUID build dipindah ke `module.json` (2026-10-15)**: aktivasi modul kini membaca `"build"` dari `module.json` dan `Services/BuildService.php` dihapus; integritas `module.json` diverifikasi terhadap rilis resmi (jangan diubah di production). Tidak ada perubahan perilaku fitur. Memerlukan Simpel Core >= 1.10.0.
 - **Skema module.json diseragamkan (2026-10-14)**: kunci non-baku (`slug`, `providers`, `aliases`, `files`, `order`, `requires`, `keywords`, `author_url`) dibuang; helper dimuat otomatis oleh ProviderTrait.
 - **Sinkronisasi Versi module.json ke v1.0.1 (2026-09-18)**: Menyelaraskan nomor versi pada berkas `module.json` menjadi `1.0.1` agar sinkron dengan catatan rilis aktif per CODING-STANDARDS.md §16.
