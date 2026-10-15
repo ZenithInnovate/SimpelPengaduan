@@ -2,6 +2,7 @@
     "name": "Simpel Pengaduan",
     "namelower": "simpel-pengaduan",
     "namespace": "SimpelPengaduan",
+    "build": "c7f9518e-6e4b-4b55-a5f1-39c28ea03d41",
     "type": "module",
     "description": "Modul Pengaduan Warga OpenSID terintegrasi tabel pengaduan inti, tracking tiket, respons percakapan berutas, dan notifikasi WhatsApp",
     "version": "1.0.1",

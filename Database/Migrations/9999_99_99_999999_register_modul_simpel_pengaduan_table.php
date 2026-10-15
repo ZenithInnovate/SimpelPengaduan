@@ -18,7 +18,6 @@ use Modules\SimpelCore\Models\ModulModel;
 use Modules\SimpelCore\Services\ModulService;
 use Modules\SimpelCore\Traits\MigratorTrait;
 use Modules\SimpelPengaduan\Database\Seeders\Demo\DemoPengaduanSeeder;
-use Modules\SimpelPengaduan\Services\BuildService;
 
 return new class extends Migration
 {
@@ -46,7 +45,7 @@ return new class extends Migration
             $this->deleteModul(['slug' => 'simpel-pengaduan']);
         });
 
-        $uuid = BuildService::get();
+        $uuid = ModulService::buildUuid('SimpelPengaduan');
 
         if ($uuid) {
             ModulModel::withoutConfigId()->where('modul_uuid', $uuid)->delete();
