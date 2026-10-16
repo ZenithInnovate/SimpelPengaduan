@@ -4,8 +4,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 @extends('admin.layouts.index')
 @include('simpel-core::components.assets.style')
 @include('simpel-core::components.page.header', [
-    'title' => 'Pengaduan Warga',
-    'sub' => 'Simpel Pengaduan',
+    'title'      => 'Pengaduan Warga',
     'breadcrumb' => ['Pengaduan Warga'],
 ])
 
@@ -63,7 +62,6 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
     </div>
 
     @include('simpel-core::components.card.open', [
-        'buttons' => ['panduan' => ['url' => simpel_url('simpel/panduan/SimpelPengaduan/panduan')]],
         'type' => 'box-primary',
         'row' => true,
     ])

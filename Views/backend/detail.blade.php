@@ -5,12 +5,9 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 @include('simpel-core::components.assets.style')
 @include('simpel-core::components.assets.form_request')
 @include('simpel-core::components.page.header', [
-    'title' => 'Detail & Utas Pengaduan',
-    'sub' => 'Simpel Pengaduan',
-    'breadcrumb' => [
-        ['url' => simpel_url('simpel/pengaduan'), 'label' => 'Pengaduan'],
-        'Detail Tiket ' . $pengaduan->nomor_tiket
-    ],
+    'title'      => 'Pengaduan Warga',
+    'sub'        => 'Lihat Data',
+    'breadcrumb' => [['Pengaduan Warga', simpel_url('simpel/pengaduan')], 'Lihat Data'],
 ])
 
 @section('content')
