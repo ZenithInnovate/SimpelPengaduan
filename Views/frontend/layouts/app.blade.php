@@ -8,14 +8,14 @@
     @php
         use Carbon\Carbon;
 
-        $namaWilayahDesa = ucwords(simpel_setting('sebutan_desa', 'Desa')) . ' ' . simpel_identitas('nama_desa');
-        $namaKecamatan   = ucwords(simpel_setting('sebutan_kecamatan', 'Kecamatan')) . ' ' . simpel_identitas('nama_kecamatan');
-        $namaProvinsi    = simpel_identitas('nama_propinsi') ?: simpel_identitas('nama_provinsi');
+        $namaWilayahDesa = ucwords(simpel_setting('sebutan_desa', 'Desa')) . ' ' . identitas('nama_desa');
+        $namaKecamatan   = ucwords(simpel_setting('sebutan_kecamatan', 'Kecamatan')) . ' ' . identitas('nama_kecamatan');
+        $namaProvinsi    = identitas('nama_propinsi') ?: identitas('nama_provinsi');
         $judulLayanan    = 'Layanan Pengaduan Warga ' . $namaWilayahDesa;
         $pageTitle       = trim($__env->yieldContent('title', ''));
         $fullTitle       = ($pageTitle ? $pageTitle . ' | ' : '') . $judulLayanan . ' - ' . $namaKecamatan;
         $deskripsiSeo    = "Portal Aspirasi & Layanan Pengaduan Masyarakat {$namaWilayahDesa}, {$namaKecamatan}, {$namaProvinsi}. Sampaikan keluhan, aspirasi, dan pantau progres penanganan secara transparan.";
-        $logoDesaUrl     = gambar_desa(simpel_identitas('logo'));
+        $logoDesaUrl     = gambar_desa(identitas('logo'));
         $faviconUrl      = favico_desa();
     @endphp
 
@@ -23,7 +23,7 @@
 
     <!-- SEO & Meta -->
     <meta name="description" content="{{ $deskripsiSeo }}">
-    <meta name="keywords" content="Pengaduan Desa, Aspirasi Warga, Layanan Pengaduan, {{ simpel_identitas('nama_desa') }}, {{ simpel_identitas('nama_kecamatan') }}, Transparansi Desa">
+    <meta name="keywords" content="Pengaduan Desa, Aspirasi Warga, Layanan Pengaduan, {{ identitas('nama_desa') }}, {{ identitas('nama_kecamatan') }}, Transparansi Desa">
     <meta name="author" content="Pemerintah {{ $namaWilayahDesa }}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ current_url() }}">
@@ -95,7 +95,7 @@
                         Layanan Pengaduan Warga
                     </div>
                     <div class="text-xs text-slate-500 font-medium">
-                        {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}
+                        {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ identitas('nama_desa') }}
                     </div>
                 </div>
             </a>
@@ -116,7 +116,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 font-medium">
         <div class="max-w-6xl mx-auto px-4">
-            &copy; {{ (int) date('Y') }} Pemerintah {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ simpel_identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
+            &copy; {{ (int) date('Y') }} Pemerintah {{ ucwords(simpel_setting('sebutan_desa', 'Desa')) }} {{ identitas('nama_desa') }}. Layanan Pengaduan & Aspirasi Terpadu.
         </div>
     </footer>
 

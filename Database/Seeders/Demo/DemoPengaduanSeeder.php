@@ -46,7 +46,7 @@ class DemoPengaduanSeeder extends Seeder
 
         Model::unguard();
 
-        $configId = simpel_identitas('id');
+        $configId = identitas('id');
 
         if ((string) simpel_setting(self::PENANDA) === '1') {
             return;
