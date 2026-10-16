@@ -14,8 +14,8 @@
 namespace Modules\SimpelPengaduan\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\SimpelCore\Traits\InfoTrait;
 use Modules\SimpelCore\Traits\ProviderTrait;
-use Modules\SimpelPengaduan\Traits\InfoTrait;
 
 class SimpelPengaduanServiceProvider extends ServiceProvider
 {
