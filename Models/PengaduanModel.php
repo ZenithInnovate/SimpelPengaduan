@@ -16,6 +16,7 @@ namespace Modules\SimpelPengaduan\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\File;
 use Modules\SimpelCore\Models\BaseModel;
 use Modules\SimpelCore\Models\Modify\PendudukModel;
 use Modules\SimpelCore\Traits\ConfigId;
@@ -132,7 +133,7 @@ class PengaduanModel extends BaseModel
         $path = defined('LOKASI_PENGADUAN') ? LOKASI_PENGADUAN : 'desa/upload/pengaduan/';
         $fullFile = FCPATH.$path.$this->foto;
 
-        if (file_exists($fullFile)) {
+        if (File::exists($fullFile)) {
             return base_url($path.$this->foto);
         }
 
@@ -217,8 +218,8 @@ class PengaduanModel extends BaseModel
             if ($model->foto) {
                 $lokasi = defined('LOKASI_PENGADUAN') ? LOKASI_PENGADUAN : 'desa/upload/pengaduan/';
                 $file = FCPATH.$lokasi.$model->foto;
-                if (file_exists($file) && is_file($file)) {
-                    @unlink($file);
+                if (File::exists($file) && File::isFile($file)) {
+                    File::delete($file);
                 }
             }
         });

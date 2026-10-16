@@ -13,6 +13,7 @@
 
 namespace Modules\SimpelPengaduan\Traits;
 
+use Illuminate\Support\Facades\File;
 use RuntimeException;
 
 trait InfoTrait
@@ -21,7 +22,7 @@ trait InfoTrait
     {
         $path = __DIR__.'/../module.json';
 
-        if (! file_exists($path)) {
+        if (! File::exists($path)) {
             throw new RuntimeException("module.json modul tidak ditemukan: {$path}");
         }
 
@@ -33,7 +34,7 @@ trait InfoTrait
         $this->moduleVersion = $moduleJson->version ?? '';
         $this->moduleRequire = (array) ($moduleJson->require ?? []);
 
-        if (file_exists(__DIR__.'/../rilis.md')) {
+        if (File::exists(__DIR__.'/../rilis.md')) {
             $this->rilis = true;
         }
 
