@@ -11,8 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-namespace Modules\SimpelPengaduan\Http\Controllers\FrontEnd;
-
 use Modules\SimpelCore\Http\Controllers\WebModulController;
 use Modules\SimpelPengaduan\Http\Requests\KirimPengaduanRequest;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;

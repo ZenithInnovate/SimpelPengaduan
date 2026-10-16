@@ -11,8 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-namespace Modules\SimpelPengaduan\Http\Controllers\BackEnd;
-
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewResponse;
 use Modules\SimpelCore\Http\Controllers\AdminModulController;

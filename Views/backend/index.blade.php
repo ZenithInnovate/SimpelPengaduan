@@ -64,8 +64,11 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
     @include('simpel-core::components.card.open', [
         'type' => 'box-primary',
         'row' => true,
+        'buttons' => [
+            'filter' => true,
+        ],
     ])
-        <div class="row mepet">
+        @include('simpel-core::components.filters.panel.open', ['id' => 'filter', 'open' => false])
             <div class="col-md-3">
                 <label class="control-label">Filter Status</label>
                 <select id="filter-status" class="form-control input-sm">
@@ -75,8 +78,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
                     @endforeach
                 </select>
             </div>
-        </div>
-        <hr class="batas">
+        @include('simpel-core::components.filters.panel.close')
 
         <div class="table-responsive">
             @include('simpel-core::components.table.datatable', [
