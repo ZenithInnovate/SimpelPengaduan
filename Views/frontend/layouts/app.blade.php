@@ -86,7 +86,7 @@
     <!-- Header Navbar -->
     <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-sm backdrop-blur-md bg-white/95">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
-            <a href="{{ simpel_url('layanan-pengaduan') }}" class="flex items-center gap-3 group">
+            <a href="{{ url('layanan-pengaduan') }}" class="flex items-center gap-3 group">
                 <span class="h-11 w-11 rounded-xl bg-slate-50 p-1 border border-slate-200 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group-hover:scale-105 transition transform">
                     <img src="{{ gambar_desa($desa->logo ?? null) }}" alt="Logo Desa" class="h-9 w-9 object-contain">
                 </span>
@@ -101,7 +101,7 @@
             </a>
 
             <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
-                <a href="{{ simpel_url() }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
+                <a href="{{ url() }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
                     <i class="fa fa-home mr-1"></i> Beranda Web
                 </a>
             </div>

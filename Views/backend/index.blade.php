@@ -101,7 +101,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
     $(document).ready(function () {
         @include('simpel-core::components.js.datatable', [
             'var' => 'TablePengaduan',
-            'url' => simpel_url('simpel/pengaduan/datatables'),
+            'url' => url('simpel/pengaduan/datatables'),
             'ajaxData' => 'd.status = $("#filter-status").val();',
             'columns' => [
                 ['data' => 'DT_RowIndex', 'class' => 'padat', 'orderable' => false, 'searchable' => false],

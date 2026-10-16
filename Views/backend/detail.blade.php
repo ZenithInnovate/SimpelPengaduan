@@ -7,7 +7,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 @include('simpel-core::components.page.header', [
     'title'      => 'Pengaduan Warga',
     'sub'        => 'Lihat Data',
-    'breadcrumb' => [['Pengaduan Warga', simpel_url('simpel/pengaduan')], 'Lihat Data'],
+    'breadcrumb' => [['Pengaduan Warga', url('simpel/pengaduan')], 'Lihat Data'],
 ])
 
 @section('content')
@@ -58,7 +58,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
                     </ul>
 
                     {{-- Form Cepat Perbarui Status --}}
-                    <form id="form_status" action="{{ simpel_url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
+                    <form id="form_status" action="{{ url('simpel/pengaduan/status/' . $pengaduan->id) }}" method="post">
                         @include('simpel-core::components.form.csrf')
                         <div class="form-group" style="margin-top: 15px;">
                             <label class="control-label">Perbarui Status Penanganan:</label>
@@ -77,7 +77,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
 
                     <div style="margin-top: 15px;">
                         @include('simpel-core::components.buttons.kembali', [
-                            'url' => simpel_url('simpel/pengaduan'),
+                            'url' => url('simpel/pengaduan'),
                             'label' => 'Daftar Pengaduan',
                         ])
                     </div>
@@ -166,7 +166,7 @@ use Modules\SimpelPengaduan\Enums\StatusPengaduanEnum;
                 'icon' => 'fa-reply',
                 'noBody' => true,
             ])
-                <form id="form_validasi" action="{{ simpel_url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
+                <form id="form_validasi" action="{{ url('simpel/pengaduan/tanggapi/' . $pengaduan->id) }}" method="post" enctype="multipart/form-data">
                     @include('simpel-core::components.form.csrf')
                     <div class="box-body">
                         @include('simpel-core::components.form.field', [

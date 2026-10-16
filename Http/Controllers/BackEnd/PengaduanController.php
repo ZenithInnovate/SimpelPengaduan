@@ -83,13 +83,13 @@ class PengaduanController extends AdminModulController
     private static function renderAksi(PengaduanModel $row): string
     {
         $btnDetail = View::make('simpel-core::components.buttons.actions.detail', [
-            'url' => simpel_url('simpel/pengaduan/detail/'.$row->id),
+            'url' => url('simpel/pengaduan/detail/'.$row->id),
             'icon' => 'fa-comments',
             'title' => 'Utas & Tanggapi',
         ])->render();
         $btnDelete = View::make('simpel-core::components.buttons.actions.delete', [
             'id' => $row->id,
-            'url' => simpel_url('simpel/pengaduan/delete'),
+            'url' => url('simpel/pengaduan/delete'),
         ])->render();
 
         return '<div class="btn-group">'.$btnDetail.' '.$btnDelete.'</div>';
@@ -120,7 +120,7 @@ class PengaduanController extends AdminModulController
         return json([
             'status' => 'success',
             'message' => simpel_message('simpel-pengaduan::messages.response_success'),
-            'redirect_url' => simpel_url('simpel/pengaduan/detail/'.$id),
+            'redirect_url' => url('simpel/pengaduan/detail/'.$id),
         ]);
     }
 
