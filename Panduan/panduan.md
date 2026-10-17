@@ -63,3 +63,7 @@ Pengaturan modul dapat disesuaikan pada menu **Pengaturan Aplikasi** OpenSID (ka
 - **Nomor WhatsApp Admin Pengaduan (`sp_wa_admin_nomor`)**:
   - Isi dengan nomor WhatsApp petugas desa yang ditugaskan menangani pengaduan (format `08xxxxxxxxxx`).
   - Setiap ada laporan baru atau balasan dari warga, nomor ini akan menerima pemberitahuan otomatis.
+
+## Melacak tiket (diperbarui 2026-10-18)
+
+Warga melacak pengaduan dengan **nomor WhatsApp/NIK pelapor**, atau dengan **nomor tiket + NIK/WhatsApp pelapor** (kolom verifikasi di samping kolom tiket). Nomor tiket saja tidak lagi cukup, agar isi laporan orang lain tidak bisa dilihat dengan menebak nomor. Balasan lanjutan dari warga memakai verifikasi yang sama. Pelacakan dibatasi lajunya per alamat IP.
