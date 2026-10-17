@@ -1,4 +1,5 @@
 ##### 🔒 **CATATAN RILIS v1.0.1**
+- **Kompat L13 (2026-10-18)**: `str_limit()` (helper `laravel/helpers`, hilang di Laravel 13 → fatal di Premium) diganti `Str::limit()` pada daftar pengaduan.
 - **URL seragam `url()` (2026-10-18)**: `site_url()`/`simpel_url()` dan `url()` tanpa argumen diganti `url('path')`/`url('/')` (kompatibel I10 polyfill & L13 native).
 - **Hapus pengaduan hanya POST (2026-10-18)**: rute `delete` tidak lagi menerima GET.
 - **Pelacakan tiket tidak lagi dapat dienumerasi (2026-10-18)**: nomor tiket wajib disertai NIK/WA pelapor (nomor tiket saja bukan kredensial), pelacakan & balasan dibatasi laju; form lacak punya kolom verifikasi.

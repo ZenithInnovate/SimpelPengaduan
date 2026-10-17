@@ -12,6 +12,7 @@
  */
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Illuminate\View\View as ViewResponse;
 use Modules\SimpelCore\Http\Controllers\AdminModulController;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
@@ -68,7 +69,7 @@ class PengaduanController extends AdminModulController
             ->addColumn('laporan', static function (PengaduanModel $row): string {
                 $badge = $row->foto ? ' <span class="badge label-default"><i class="fa fa-paperclip"></i> Foto</span>' : '';
 
-                return '<strong>'.e($row->judul).'</strong>'.$badge.'<p class="text-muted mb-0" style="font-size: 12px;">'.e(str_limit($row->isi, 80)).'</p>';
+                return '<strong>'.e($row->judul).'</strong>'.$badge.'<p class="text-muted mb-0" style="font-size: 12px;">'.e(Str::limit($row->isi, 80)).'</p>';
             })
             ->addColumn('status_badge', static fn (PengaduanModel $row): string => '<span class="label label-'.$row->status_badge.'">'.$row->status_label.'</span>')
             ->addColumn('tgl_lapor', static fn (PengaduanModel $row): string => $row->created_at ? $row->created_at->format('d/m/Y H:i') : '-')
