@@ -1,6 +1,6 @@
 # Analisis Modul — SimpelPengaduan
 
-*Per 2026-09-07. Bagian dari [../../Docs/ANALISIS-GLOBAL.md](../../Docs/ANALISIS-GLOBAL.md).*
+*Per 2026-09-07. Bagian dari [../../Docs/Analisis/ANALISIS-GLOBAL.md](../../Docs/Analisis/ANALISIS-GLOBAL.md).*
 
 ## Dokumentasi modul ini
 
