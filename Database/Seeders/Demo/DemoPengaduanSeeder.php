@@ -33,7 +33,7 @@ class DemoPengaduanSeeder extends Seeder
     public function run(): void
     {
         $isDemo = (function_exists('config_item') && config_item('demo_mode'))
-            || (function_exists('simpel_setting') && (string) simpel_setting('demo_mode') === '1')
+            || ((string) simpel_setting('demo_mode') === '1')
             || (defined('ENVIRONMENT') && ENVIRONMENT === 'development');
 
         if (! $isDemo) {
