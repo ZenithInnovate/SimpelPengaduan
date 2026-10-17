@@ -112,13 +112,17 @@
     <div id="tab-content-lacak" class="hidden space-y-6">
         <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 sm:p-8">
             <h2 class="text-lg font-bold text-slate-900 mb-2">Lacak Status & Riwayat Tanggapan</h2>
-            <p class="text-xs text-slate-500 mb-4">Masukkan nomor tiket pengaduan (misal: LPR-202609-0001) atau nomor WhatsApp yang Anda daftarkan saat melapor.</p>
+            <p class="text-xs text-slate-500 mb-4">Masukkan nomor WhatsApp/NIK yang Anda daftarkan saat melapor, atau nomor tiket (misal: LPR-202609-0001) beserta NIK/WA pelapor sebagai verifikasi.</p>
 
             <form id="form-lacak" class="flex flex-col sm:flex-row gap-3">
                 <div class="relative flex-1">
                     <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                     <input type="text" id="input-kata-kunci" required placeholder="Nomor Tiket / Nomor WhatsApp / NIK..."
                         class="w-full border border-slate-300 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition">
+                </div>
+                <div class="relative sm:w-64">
+                    <input type="text" id="input-verifikasi" placeholder="NIK / WA pelapor (wajib bila pakai No. Tiket)"
+                        class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition">
                 </div>
                 <button type="submit" id="btn-submit-lacak"
                     class="px-6 py-2.5 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-900 transition flex items-center justify-center gap-2">
@@ -239,10 +243,12 @@
                         showCancelButton: true,
                         cancelButtonText: 'Tutup'
                     }).then(function (result) {
+                        var teleponPelapor = $('#form-pengaduan [name=telepon]').val();
                         $('#form-pengaduan')[0].reset();
                         if (result.isConfirmed) {
                             switchTab('lacak');
                             $('#input-kata-kunci').val(res.nomor_tiket);
+                            $('#input-verifikasi').val(teleponPelapor);
                             $('#form-lacak').submit();
                         }
                     });
@@ -283,7 +289,7 @@
             $.ajax({
                 url: '{{ url("layanan-pengaduan/lacak") }}',
                 type: 'GET',
-                data: { kata_kunci: kataKunci },
+                data: { kata_kunci: kataKunci, verifikasi: ($('#input-verifikasi').val() || '').trim() },
                 success: function (res) {
                     clearTimeout(loadingTimer);
                     if (Swal.isVisible() && Swal.isLoading()) { Swal.close(); }
@@ -352,7 +358,7 @@
             e.preventDefault();
             var id = $('#balas-pengaduan-id').val();
             var isi = $('#balas-isi').val().trim();
-            var kataKunciBalas = $('#input-kata-kunci').val().trim();
+            var kataKunciBalas = ($('#input-verifikasi').val() || $('#input-kata-kunci').val() || '').trim();
             if (!id || !isi) return;
 
             var $btn = $('#btn-submit-balas');

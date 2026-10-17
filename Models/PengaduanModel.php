@@ -157,19 +157,23 @@ class PengaduanModel extends BaseModel
     }
 
     /**
-     * Memeriksa apakah kata kunci cocok dengan nomor tiket, NIK, atau nomor telepon pengaduan.
+     * Memeriksa apakah kredensial cocok dengan NIK atau nomor telepon pelapor.
+     * Nomor tiket TIDAK lagi dianggap kredensial (berformat sekuensial → dapat ditebak/dienumerasi).
      */
-    public function isCocokKredensial(?string $kataKunci): bool
+    public function isCocokKredensial(?string $kredensial): bool
     {
-        $kataKunci = trim((string) $kataKunci);
+        $kredensial = trim((string) $kredensial);
 
-        if ($kataKunci === '') {
+        if ($kredensial === '') {
             return false;
         }
 
-        return $this->nomor_tiket === $kataKunci
-            || (! empty($this->nik) && $this->nik === $kataKunci)
-            || (! empty($this->telepon) && $this->telepon === $kataKunci);
+        $cocokNik = ! empty($this->nik) && hash_equals((string) $this->nik, $kredensial);
+        $hpInput = simpel_nomor_hp($kredensial);
+        $hpTersimpan = simpel_nomor_hp((string) $this->telepon);
+        $cocokHp = $hpInput !== null && $hpTersimpan !== null && hash_equals($hpTersimpan, $hpInput);
+
+        return $cocokNik || $cocokHp;
     }
 
     /**

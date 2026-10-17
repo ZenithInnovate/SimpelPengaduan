@@ -12,6 +12,7 @@
  */
 
 use Modules\SimpelCore\Http\Controllers\WebModulController;
+use Modules\SimpelCore\Traits\RateLimitTrait;
 use Modules\SimpelPengaduan\Http\Requests\KirimPengaduanRequest;
 use Modules\SimpelPengaduan\Http\Requests\TanggapiPengaduanRequest;
 use Modules\SimpelPengaduan\Models\PengaduanModel;
@@ -22,6 +23,8 @@ defined('BASEPATH') || exit('No direct script access allowed');
 
 class PengaduanWargaController extends WebModulController
 {
+    use RateLimitTrait;
+
     protected PengaduanService $service;
 
     public function __construct(?PengaduanService $service = null)
@@ -72,12 +75,15 @@ class PengaduanWargaController extends WebModulController
             return;
         }
 
-        $pengaduan = $this->service->cariTiket($kataKunci);
+        $this->ensureMinuteRateLimited('sp_lacak', 10);
+        $this->ensureNotRateLimited('sp_lacak', 200);
+
+        $pengaduan = $this->service->cariTiket($kataKunci, trim((string) request('verifikasi')));
 
         if (! $pengaduan instanceof PengaduanModel) {
             json([
                 'success' => false,
-                'message' => 'Data pengaduan tidak ditemukan. Pastikan nomor tiket atau kontak sesuai.',
+                'message' => 'Data pengaduan tidak ditemukan. Jika memakai nomor tiket, sertakan NIK atau nomor WhatsApp pelapor.',
             ], 404);
 
             return;
@@ -96,11 +102,12 @@ class PengaduanWargaController extends WebModulController
     {
         $parent = PengaduanModel::utama()->findOrFail($id);
 
-        // IDOR guard: verifikasi kata kunci (tiket/NIK/WA) terhadap pemilik tiket
+        // IDOR guard: verifikasi NIK/WA terhadap pemilik tiket (nomor tiket saja tidak cukup)
+        $this->ensureMinuteRateLimited('sp_balas', 10);
         if (! $parent->isCocokKredensial(request('kata_kunci'))) {
             json([
                 'success' => false,
-                'message' => 'Nomor tiket, NIK, atau nomor WhatsApp tidak sesuai dengan pengaduan ini.',
+                'message' => 'NIK atau nomor WhatsApp tidak sesuai dengan pengaduan ini.',
             ], 403);
 
             return;

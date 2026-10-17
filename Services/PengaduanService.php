@@ -144,15 +144,15 @@ class PengaduanService
     /**
      * Cari pengaduan berdasarkan nomor tiket atau kata kunci
      */
-    public function cariTiket(string $kataKunci): ?PengaduanModel
+    public function cariTiket(string $kataKunci, ?string $verifikasi = null): ?PengaduanModel
     {
         $id = PengaduanModel::parseIdFromTiket($kataKunci);
 
+        // Nomor tiket sekuensial → wajib disertai NIK/WA pelapor (cegah enumerasi IDOR)
         if ($id) {
             $item = PengaduanModel::utama()->find($id);
-            if ($item) {
-                return $item;
-            }
+
+            return $item && $item->isCocokKredensial($verifikasi) ? $item : null;
         }
 
         return PengaduanModel::utama()

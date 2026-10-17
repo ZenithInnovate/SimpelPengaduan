@@ -1,4 +1,5 @@
 ##### 🔒 **CATATAN RILIS v1.0.1**
+- **Pelacakan tiket tidak lagi dapat dienumerasi (2026-10-18)**: nomor tiket wajib disertai NIK/WA pelapor (nomor tiket saja bukan kredensial), pelacakan & balasan dibatasi laju; form lacak punya kolom verifikasi.
 - **Standarisasi Global Namespace Controller Modul (2026-10-16)**: Menghapus deklarasi PHP namespace pada controller backend (`PengaduanController`) dan frontend (`PengaduanWargaController`) agar kompatibel penuh dengan router CodeIgniter 3 OpenSID Umum v2507+ dan Premium terbaru.
 - **Panduan penggunaan per menu (2026-10-16)**: Tombol **Panduan** pada halaman daftar pengaduan. Panduan menjelaskan fungsi dan isian tiap menu.
 - **UUID build dipindah ke `module.json` (2026-10-15)**: aktivasi modul kini membaca `"build"` dari `module.json` dan `Services/BuildService.php` dihapus; integritas `module.json` diverifikasi terhadap rilis resmi (jangan diubah di production). Tidak ada perubahan perilaku fitur. Memerlukan Simpel Core >= 1.10.0.
