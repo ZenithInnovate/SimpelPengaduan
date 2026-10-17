@@ -19,7 +19,7 @@ Warga desa dapat menyampaikan laporan pengaduan secara mandiri melalui tautan pu
 
 2. **Melacak Progres Laporan**:
    - Pilih tab **Lacak Progres Tiket**.
-   - Masukkan nomor tiket pengaduan (contoh: `LPR-202609-0001`) atau nomor WhatsApp / NIK pelapor.
+   - Masukkan **nomor WhatsApp atau NIK pelapor**, *atau* nomor tiket (contoh: `LPR-202609-0001`) **disertai** NIK/WhatsApp pelapor pada kolom verifikasi di sebelahnya. Nomor tiket saja tidak cukup — ini mencegah laporan orang lain dibuka dengan menebak nomor. Setelah mengirim laporan, tombol **Lacak Tiket Ini** mengisinya otomatis.
    - Klik **Lacak Tiket**.
    - Sistem akan menampilkan status laporan (*Menunggu Diproses*, *Sedang Diproses*, atau *Selesai Diproses*), riwayat tanggapan dari pemerintah desa, dan form balasan lanjutan bagi warga.
 
@@ -63,7 +63,3 @@ Pengaturan modul dapat disesuaikan pada menu **Pengaturan Aplikasi** OpenSID (ka
 - **Nomor WhatsApp Admin Pengaduan (`sp_wa_admin_nomor`)**:
   - Isi dengan nomor WhatsApp petugas desa yang ditugaskan menangani pengaduan (format `08xxxxxxxxxx`).
   - Setiap ada laporan baru atau balasan dari warga, nomor ini akan menerima pemberitahuan otomatis.
-
-## Melacak tiket (diperbarui 2026-10-18)
-
-Warga melacak pengaduan dengan **nomor WhatsApp/NIK pelapor**, atau dengan **nomor tiket + NIK/WhatsApp pelapor** (kolom verifikasi di samping kolom tiket). Nomor tiket saja tidak lagi cukup, agar isi laporan orang lain tidak bisa dilihat dengan menebak nomor. Balasan lanjutan dari warga memakai verifikasi yang sama. Pelacakan dibatasi lajunya per alamat IP.
