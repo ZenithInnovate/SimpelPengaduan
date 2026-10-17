@@ -1,4 +1,5 @@
 ##### 🔒 **CATATAN RILIS v1.0.1**
+- **URL seragam `url()` (2026-10-18)**: `site_url()`/`simpel_url()` dan `url()` tanpa argumen diganti `url('path')`/`url('/')` (kompatibel I10 polyfill & L13 native).
 - **Hapus pengaduan hanya POST (2026-10-18)**: rute `delete` tidak lagi menerima GET.
 - **Pelacakan tiket tidak lagi dapat dienumerasi (2026-10-18)**: nomor tiket wajib disertai NIK/WA pelapor (nomor tiket saja bukan kredensial), pelacakan & balasan dibatasi laju; form lacak punya kolom verifikasi.
 - **Standarisasi Global Namespace Controller Modul (2026-10-16)**: Menghapus deklarasi PHP namespace pada controller backend (`PengaduanController`) dan frontend (`PengaduanWargaController`) agar kompatibel penuh dengan router CodeIgniter 3 OpenSID Umum v2507+ dan Premium terbaru.

@@ -101,7 +101,7 @@
             </a>
 
             <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
-                <a href="{{ url() }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
+                <a href="{{ url('/') }}" class="text-slate-600 hover:text-brand-600 px-3 py-1.5 rounded-lg font-medium transition">
                     <i class="fa fa-home mr-1"></i> Beranda Web
                 </a>
             </div>
