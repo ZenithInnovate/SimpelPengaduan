@@ -1,0 +1,88 @@
+name: Trigger akar-dev.com pull
+
+# Memicu akar-dev.com menarik (pull) data versi/tag TERBARU modul ini setiap kali
+# ada tag atau rilis baru. Endpoint hanya menarik 1 versi teratas (only_latest=1).
+#
+# Hanya berjalan di repo modul standalone (file ini ada di .github/workflows/ root repo).
+# Di monorepo Ekosistem-Modul file ini berada di <Modul>/.github/workflows/ sehingga
+# GitHub tidak menjalankannya di sana.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+
+# Tag-push dan release-published untuk versi yang sama tidak menembak dua kali sekaligus.
+concurrency:
+  group: akardev-pull-${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Baca slug modul dari module.json
+        id: modul
+        run: |
+          set -euo pipefail
+          if [ ! -f module.json ]; then
+            echo "::error::module.json tidak ditemukan di root repo."
+            exit 1
+          fi
+          SLUG="$(jq -r '.namelower // .slug // empty' module.json)"
+          if [ -z "$SLUG" ] || [ "$SLUG" = "null" ]; then
+            echo "::error::Kunci 'namelower' tidak ada di module.json."
+            exit 1
+          fi
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "Slug modul : $SLUG"
+          echo "Ref        : ${GITHUB_REF_NAME}"
+
+      - name: Trigger pull versi terbaru
+        env:
+          AKARDEV_BASE: https://akar-dev.com
+          AKARDEV_API_KEY: ${{ secrets.AKARDEV_API_KEY }}
+        run: |
+          set -euo pipefail
+          SLUG="${{ steps.modul.outputs.slug }}"
+          URL="${AKARDEV_BASE}/api/v2/layanan/modul/${SLUG}/pull?only_latest=1"
+          echo "POST ${URL}"
+
+          ARGS=(--silent --show-error --max-time 120 --retry 2 --retry-delay 5
+                --output resp.json --write-out '%{http_code}' -X POST)
+          if [ -n "${AKARDEV_API_KEY:-}" ]; then
+            ARGS+=(-H "x-api-key: ${AKARDEV_API_KEY}")
+          fi
+
+          HTTP="$(curl "${ARGS[@]}" "${URL}" || true)"
+          echo "HTTP ${HTTP}"
+          echo "--- respon ---"
+          cat resp.json 2>/dev/null || true
+          echo
+          echo "--------------"
+
+          # 429 = cooldown/rate-limit di server (versi sudah/segera ditarik) -> bukan kegagalan.
+          if [ "${HTTP}" = "429" ]; then
+            echo "::notice::akar-dev.com sedang cooldown untuk modul ini. Dianggap OK."
+            exit 0
+          fi
+
+          OK="$(jq -r '.success // false' resp.json 2>/dev/null || echo false)"
+          MSG="$(jq -r '.message // "tanpa pesan"' resp.json 2>/dev/null || echo 'respon tidak valid')"
+
+          if [ "${OK}" != "true" ]; then
+            echo "::error::Trigger pull gagal (HTTP ${HTTP}): ${MSG}"
+            exit 1
+          fi
+
+          echo "::notice::${MSG}"
