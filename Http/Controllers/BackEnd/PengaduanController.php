@@ -11,6 +11,7 @@
  * -----------------------------------------------------------------------------
  */
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Illuminate\View\View as ViewResponse;
