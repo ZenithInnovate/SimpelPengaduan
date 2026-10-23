@@ -1,4 +1,12 @@
-##### 🔒 **CATATAN RILIS v0.0.1**
+##### 🚀 **CATATAN RILIS v0.0.1**
+
+## ✨ Fitur Baru
+- Pengaduan dan aspirasi warga terhubung ke data pengaduan OpenSID.
+- Kode tiket otomatis (LPR-TahunBulan-Nomor) untuk melacak pengaduan.
+- Dashboard ringkasan pengaduan.
+- Tanggapan percakapan berutas antara admin dan warga.
+- Pemberitahuan WhatsApp ke pelapor.
+- Formulir pengaduan publik yang nyaman dibuka di HP.
 
 ---
 
