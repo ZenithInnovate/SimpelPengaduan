@@ -1,15 +1,4 @@
-##### 🔒 **CATATAN RILIS v1.0.1**
-
-## 🔧 Perbaikan
-- Memperbaiki error pada daftar pengaduan.
-- Berjalan baik di OpenSID Premium (Laravel 13).
-
-## 🔒 Keamanan
-- Pelacakan tiket kini membutuhkan NIK atau nomor WhatsApp pelapor, bukan hanya nomor tiket.
-- Hapus pengaduan kini lewat tombol yang lebih aman.
-
-## 📚 Dokumentasi
-- Tombol **Panduan** di halaman daftar pengaduan.
+##### 🔒 **CATATAN RILIS v0.0.1**
 
 ---
 
