@@ -5,8 +5,8 @@
     "build": "c7f9518e-6e4b-4b55-a5f1-39c28ea03d41",
     "type": "module",
     "description": "Modul Pengaduan Warga OpenSID terintegrasi tabel pengaduan inti, tracking tiket, respons percakapan berutas, dan notifikasi WhatsApp",
-    "version": "0.0.2",
-    "release_date": "2026-10-24T15:12:04+08:00",
+    "version": "0.0.3",
+    "release_date": "2026-10-24T16:09:50+08:00",
     "require": {
         "simpel-core": ">=1.10.18"
     },

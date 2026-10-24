@@ -1,7 +1,7 @@
-##### 🚀 **CATATAN RILIS v0.0.2**
+##### 🚀 **CATATAN RILIS v0.0.3**
 
 **🛠️ Perubahan Teknis**
-- Update requirement `simpel-core` minimum ke `>=1.10.24` (mengikuti rilis SimpelCore v1.10.24).
+- Kembali kompatibel dengan versi Simpel Core sebelumnya (tidak perlu memperbarui Simpel Core lebih dulu)
 
 ---
 
