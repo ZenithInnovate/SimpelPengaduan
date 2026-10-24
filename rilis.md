@@ -1,12 +1,7 @@
-##### 🚀 **CATATAN RILIS v0.0.1**
+##### 🚀 **CATATAN RILIS v0.0.2**
 
-## ✨ Fitur Baru
-- Pengaduan dan aspirasi warga terhubung ke data pengaduan OpenSID.
-- Kode tiket otomatis (LPR-TahunBulan-Nomor) untuk melacak pengaduan.
-- Dashboard ringkasan pengaduan.
-- Tanggapan percakapan berutas antara admin dan warga.
-- Pemberitahuan WhatsApp ke pelapor.
-- Formulir pengaduan publik yang nyaman dibuka di HP.
+**🛠️ Perubahan Teknis**
+- Update requirement `simpel-core` minimum ke `>=1.10.24` (mengikuti rilis SimpelCore v1.10.24).
 
 ---
 
